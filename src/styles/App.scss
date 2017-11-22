@@ -1,0 +1,14 @@
+.App {
+    display: grid;
+    grid-gap: 10px;
+    grid-template-columns: 1fr minmax(900px, 1200px) 1fr;
+    grid-template-rows: 50px 60px 1fr 1fr 50px;
+    grid-template-areas: 
+    "header header header"
+    ".      controls      ."
+    ".      chart       ."
+    ".      chart       .";
+    width: 100vw;
+    height: 100vh;
+    background: #EB613D;
+}

@@ -1,0 +1,9 @@
+.chart {
+  grid-area: chart;
+  position: relative;
+  display: flex;
+  align-content: center;
+  justify-content: center; }
+  .chart > canvas {
+    position: absolute;
+    background-color: azure; }

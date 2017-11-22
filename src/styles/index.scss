@@ -1,0 +1,17 @@
+*, *:before, *:after {
+	box-sizing: border-box;
+}
+
+html, body {
+	margin: 0;
+	padding: 0;
+	font-family: "Space Mono", monospace, sans-serif;
+	font-variant-ligatures: no-common-ligatures;
+	font-size: 1em;
+}
+
+@import "App.scss";
+@import "Header.scss";
+@import "Controls.scss";
+@import "Chart.scss";
+@import "TextInput.scss";

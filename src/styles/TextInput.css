@@ -1,0 +1,9 @@
+.textInput {
+  grid-area: input;
+  background: #dedede;
+  outline: none;
+  resize: none;
+  color: #000000;
+  font-size: 1rem; }
+  .textInput:focus {
+    background: #ffffff; }

@@ -1,0 +1,55 @@
+*, *:before, *:after {
+  box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: "Space Mono", monospace, sans-serif;
+  font-variant-ligatures: no-common-ligatures;
+  font-size: 1em; }
+
+.App {
+  display: grid;
+  grid-gap: 10px;
+  grid-template-columns: 1fr minmax(900px, 1200px) 1fr;
+  grid-template-rows: 50px 60px 1fr 1fr 50px;
+  grid-template-areas: "header header header" ".      controls      ." ".      chart       ." ".      chart       .";
+  width: 100vw;
+  height: 100vh;
+  background: #EB613D; }
+
+.header {
+  grid-area: header;
+  padding: 0px 20px;
+  background-color: #003459;
+  box-shadow: 0px 5px 3px rgba(0, 0, 0, 0.25);
+  color: #dedede;
+  display: flex;
+  align-items: center;
+  justify-content: space-between; }
+  .header > a:nth-child(1) {
+    font-size: 1.4rem; }
+
+.controls {
+  grid-area: controls;
+  background-color: aquamarine; }
+
+.chart {
+  grid-area: chart;
+  position: relative;
+  display: flex;
+  align-content: center;
+  justify-content: center; }
+  .chart > canvas {
+    position: absolute;
+    background-color: azure; }
+
+.textInput {
+  grid-area: input;
+  background: #dedede;
+  outline: none;
+  resize: none;
+  color: #000000;
+  font-size: 1rem; }
+  .textInput:focus {
+    background: #ffffff; }
