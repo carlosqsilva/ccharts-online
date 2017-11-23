@@ -5,9 +5,6 @@ class ChartComponent extends Component {
 
   componentDidMount() {
     this.render_chart()
-    // window.addEventListener("resize", () => {
-    //   this.chart_instance.resize()
-    // })
   }
 
   render_chart(){

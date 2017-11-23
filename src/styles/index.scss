@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Space+Mono:400,700');
+
 *, *:before, *:after {
 	box-sizing: border-box;
 }
@@ -11,7 +13,7 @@ html, body {
 }
 
 @import "App.scss";
+@import "Modal.scss";
 @import "Header.scss";
 @import "Controls.scss";
 @import "Chart.scss";
-@import "TextInput.scss";

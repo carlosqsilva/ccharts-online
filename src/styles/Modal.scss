@@ -1,0 +1,100 @@
+.modal {
+    position: absolute;
+    top: 0%;
+    bottom: 0%;
+    left: 0%;
+    right: 0%;
+    z-index: 50;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: grid;
+    grid-gap: 10px;
+    grid-template-columns: 1fr minmax(1000px, 1200px) 1fr;
+    grid-template-rows: 50px 60px 1fr 1fr 50px;
+    grid-template-areas: 
+        "   .   .   ."
+        "   .   options   ."
+        "   .   input   ."
+        "   .   input   ."
+        "   .   .   .";
+}
+
+.options {
+    grid-area: options;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.options > a {
+    cursor: pointer;
+}
+
+.fileInput {
+    display: flex;
+    justify-content: center;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    background-color: whitesmoke;
+    color: #4e4e4e;
+    border: 1px solid #dbdbdb;
+    border-radius: 3px;
+    line-height: 1.5rem;
+    padding: 0.6rem;
+    
+    > input[type=file] {
+        outline: none;
+        position: absolute;
+        left: 0;
+        width: 0.1px;
+        height: 0.1px;
+        opacity: 0;
+        overflow: hidden;
+    }
+
+    > img {
+        width: 20px;
+        height: 20px;
+        margin-right: 0.5rem;
+    }
+}
+
+.comboBox {
+    border: 1px solid #dbdbdb;
+    width: 230px;
+    border-radius: 3px;
+    overflow: hidden;
+    background: whitesmoke url("../assets/down-arrow.svg") no-repeat 90% 50%;
+
+    > select {
+        font-family: "Space Mono", monospace, sans-serif;
+        line-height: 1.5rem;
+        padding: 0.6rem;
+        width: 100%;
+        color: #4e4e4e;
+        border: none;
+        box-shadow: none;
+        background: transparent;
+        background-image: none;
+        appearance: none;
+
+        &:focus {
+            outline: none;
+        }
+    }
+}
+
+.textInput {
+    grid-area: input;
+    background: #dedede;
+    outline: none;
+    resize: none;
+    color: #000000;
+    font-size: 1.2rem;
+    padding: 10px;
+    border-radius: 8px;
+
+    &:focus {
+        background: #ffffff;
+    }
+}
