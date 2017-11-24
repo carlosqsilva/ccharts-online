@@ -1,10 +1,13 @@
 import {
-  TOGGLE_MODAL
+  TOGGLE_MODAL,
+  DATA_LOADED
 } from "./constants"
 
 const initialState = {
   closed: false,
   delimiter: ",",
+  data: null,
+  header: null
 }
 
 const rootReducer = (state = initialState, action) => {
@@ -13,6 +16,12 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         closed: !state.closed
+      }
+    case DATA_LOADED:
+      return {
+        ...state,
+        data: action.data,
+        header: action.header
       }
     default:
       return state

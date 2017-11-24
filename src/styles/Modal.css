@@ -10,7 +10,7 @@
   grid-gap: 10px;
   grid-template-columns: 1fr minmax(1000px, 1200px) 1fr;
   grid-template-rows: 50px 60px 1fr 1fr 50px;
-  grid-template-areas: "   .   .   ." "   .   options   ." "   .   input   ." "   .   input   ." "   .   .   ."; }
+  grid-template-areas: "   .   .   ." "   .   options   ." "   .   datagrid   ." "   .   datagrid   ." "   .   .   ."; }
 
 .options {
   grid-area: options;
@@ -20,6 +20,8 @@
 
 .options > a {
   cursor: pointer; }
+  .options > a > img {
+    vertical-align: middle; }
 
 .fileInput {
   display: flex;
@@ -66,14 +68,31 @@
     .comboBox > select:focus {
       outline: none; }
 
-.textInput {
-  grid-area: input;
-  background: #dedede;
-  outline: none;
-  resize: none;
-  color: #000000;
-  font-size: 1.2rem;
-  padding: 10px;
-  border-radius: 8px; }
-  .textInput:focus {
-    background: #ffffff; }
+.checkBox {
+  border: 1px solid #dbdbdb;
+  background-color: whitesmoke;
+  color: #4e4e4e;
+  padding: 0.6rem;
+  border-radius: 3px;
+  cursor: pointer; }
+  .checkBox > input[type=checkbox] {
+    margin-right: 0.5rem; }
+
+.dataGrid {
+  grid-area: datagrid;
+  background-color: whitesmoke;
+  border: 1px solid #dbdbdb;
+  border-radius: 3px;
+  overflow: scroll;
+  padding: 3px; }
+  .dataGrid table {
+    width: 100%;
+    height: 100%;
+    border-collapse: collapse;
+    border-spacing: 0px; }
+    .dataGrid table tr:nth-child(even) {
+      background-color: #dbdbdb; }
+    .dataGrid table td, .dataGrid table th {
+      line-height: 1.6rem;
+      border: 1px solid #4e4e4e;
+      border-width: 0 0 1px; }
