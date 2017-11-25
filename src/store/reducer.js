@@ -1,13 +1,17 @@
 import {
   TOGGLE_MODAL,
-  DATA_LOADED
+  DATA_LOADED,
+  UPDATE_HEADER
 } from "./constants"
 
 const initialState = {
   closed: false,
   delimiter: ",",
+  decimal: ".",
+  dataString: " ",
   data: null,
-  header: null
+  header: false,
+  columns: []
 }
 
 const rootReducer = (state = initialState, action) => {
@@ -21,6 +25,14 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         data: action.data,
+        columns: action.columns,
+        dataString: action.dataString
+      }
+    case UPDATE_HEADER:
+      return {
+        ...state,
+        data: action.data,
+        columns: action.columns,
         header: action.header
       }
     default:

@@ -1,6 +1,7 @@
 import {
   TOGGLE_MODAL,
-  DATA_LOADED
+  DATA_LOADED,
+  UPDATE_HEADER
 } from "./constants"
 
 export const toggle_modal = () => {
@@ -9,22 +10,47 @@ export const toggle_modal = () => {
   }
 }
 
-const dataLoaded = (data, header) => {
+const dataLoaded = (data, columns, dataString) => {
   return {
     type: DATA_LOADED,
     data,
+    columns,
+    dataString
+  }
+}
+
+const updateHeader = (data, columns, header) => {
+  return {
+    type: UPDATE_HEADER,
+    data,
+    columns,
     header
   }
 }
 
-const readCsv = (file) => {
+const processCsv = (dataString, sep, decimal, header) => {
+  let columns = []
+  let data = dataString.trim().split(/\n/).map(row => row.split(sep).filter(val => val.length > 0))
+  
+  if (header) {
+    columns = data[0]
+    data = data.slice(1)
+  } else {
+    columns = data[0].map((val, i) => `X${i}`)
+  }
+
+  data = data.map(row => row.map(cell => Number(cell.trim().replace(decimal, "."))))
+  
+  return {data, columns}
+}
+
+const readFile = (file, delimiter, decimal, header) => {
   return new Promise((resolve, reject) => {
     const reader = new FileReader()
     reader.onload = event => {
-      let data = reader.result.trim().split(/\n/).map(row => row.split(",").map(cell => Number(cell.trim())))
-      let header = ["v1","v1","v1","v1","v1"]
-      data = data.slice(1)
-      resolve({data, header})
+      let dataString = reader.result
+      let result = processCsv(dataString, delimiter, decimal, header)
+      resolve({...result, dataString})
     }
     reader.readAsText(file)
   })
@@ -32,10 +58,32 @@ const readCsv = (file) => {
 
 export const loadData = (event) => {
   let file = event.target.files[0]
-  return dispatch => {
-    readCsv(file).then(({data, header}) => {
-      let columns = header.map((val) => {return {Header: val}})
-      dispatch(dataLoaded(data, columns))
+  return (dispatch, getState) => {
+    const {
+      delimiter,
+      decimal,
+      header
+    } = getState()
+    readFile(file, delimiter, decimal, header).then(({data, columns, dataString}) => {
+      dispatch(dataLoaded(data, columns, dataString))
     })
   }
-} 
+}
+
+export const setDelimiter = (event) => {
+  let sep = [",", ",", " ", ":", ";"][event.target.selectedIndex]
+  console.log(sep)
+}
+
+export const setHeader = (event) => {
+  return (dispatch, getState) => {
+    const {
+      dataString,
+      delimiter,
+      decimal,
+      header
+    } = getState()
+    let result = processCsv(dataString, delimiter, decimal, !header)
+    dispatch(updateHeader(result.data, result.columns, !header))
+  }
+}

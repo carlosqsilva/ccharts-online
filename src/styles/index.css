@@ -72,10 +72,10 @@ html, body {
 
 .comboBox {
   border: 1px solid #dbdbdb;
-  width: 230px;
+  width: 150px;
   border-radius: 3px;
   overflow: hidden;
-  background: whitesmoke url("../assets/down-arrow.svg") no-repeat 90% 50%; }
+  background: whitesmoke url("../assets/down-arrow.svg") no-repeat 92% 50%; }
   .comboBox > select {
     font-family: "Space Mono", monospace, sans-serif;
     line-height: 1.5rem;
@@ -115,6 +115,7 @@ html, body {
     .dataGrid table tr:nth-child(even) {
       background-color: #dbdbdb; }
     .dataGrid table td, .dataGrid table th {
+      text-align: left;
       line-height: 1.6rem;
       border: 1px solid #4e4e4e;
       border-width: 0 0 1px; }
