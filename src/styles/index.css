@@ -36,6 +36,7 @@ html, body {
 
 .options {
   grid-area: options;
+  padding: 0.5rem;
   display: flex;
   justify-content: space-between;
   align-items: center; }
@@ -135,7 +136,41 @@ html, body {
 
 .controls {
   grid-area: controls;
+  padding: 0.5rem;
+  display: flex;
+  justify-content: space-between;
   background-color: aquamarine; }
+
+.button {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  line-height: 1;
+  color: #4e4e4e;
+  border-radius: 3px;
+  border: 1px solid #dbdbdb;
+  background-color: whitesmoke;
+  padding: 0.6rem; }
+
+.input {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.6rem;
+  color: #4e4e4e;
+  border-radius: 3px;
+  border: 1px solid #dbdbdb;
+  background-color: whitesmoke; }
+  .input > input[type=text] {
+    color: #4e4e4e;
+    width: 80px;
+    margin: 0 0 0 10px;
+    text-align: center;
+    line-height: 1.5;
+    background-color: whitesmoke;
+    border: none;
+    border-bottom: 1px solid #dbdbdb; }
 
 .chart {
   grid-area: chart;
