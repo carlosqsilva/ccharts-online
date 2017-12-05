@@ -1,9 +1,10 @@
 .controls {
   grid-area: controls;
-  padding: 0.5rem;
+  padding: 0.5rem 0;
   display: flex;
-  justify-content: space-between;
-  background-color: aquamarine; }
+  justify-content: flex-start; }
+  .controls > a {
+    margin-right: 50px; }
 
 .button {
   appearance: none;

@@ -10,6 +10,7 @@ const Controls = (props) => {
 
   return (
     <div className="controls">
+
       <a className="button" onClick={toggleModal}>Import Data</a>
 
       <div className="comboBox">
@@ -24,9 +25,7 @@ const Controls = (props) => {
         </select>
       </div>
 
-      <label className="input">
-        Target<input type="text" /> 
-      </label>
+      <a className="button" >Download</a>
 
     </div>
   )

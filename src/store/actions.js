@@ -2,6 +2,8 @@ import {
   TOGGLE_MODAL,
   DATA_LOADED,
   UPDATE_HEADER,
+  UPDATE_DELIMITER,
+  UPDATE_DECIMAL,
   SET_CHART,
 } from "./constants"
 
@@ -38,29 +40,48 @@ const updateHeader = (data, columns, header) => {
   }
 }
 
-const setChart = (datasets, labels, title) => {
+const updateDelimiter = (data, columns, delimiter) => {
+  return {
+    type: UPDATE_DELIMITER,
+    data,
+    columns,
+    delimiter
+  }
+}
+
+const updateDecimal = (data, columns, decimal) => {
+  return {
+    type: UPDATE_DECIMAL,
+    data,
+    columns,
+    decimal
+  }
+}
+
+const setChart = (datasets, labels, title, ticks) => {
   return {
     type: SET_CHART,
     datasets,
     labels,
-    title
+    title,
+    ticks
   }
 }
 
 const processCsv = (dataString, sep, decimal, header) => {
-  let columns = []
+  let columns = ["__"]
   let data = dataString.trim().split(/\n/).map(row => row.split(sep).filter(val => val.length > 0))
-  
+
   if (header) {
-    columns = data[0].map(_ => _.trim())
+    columns = columns.concat(data[0].map(_ => _.trim()))
     data = data.slice(1)
   } else {
-    columns = data[0].map((_, i) => `X${i}`)
+    columns = columns.concat(data[0].map((_, i) => `X${i}`))
   }
-
-  data = data.map(row => row.map(cell => Number(cell.trim().replace(decimal, "."))))
   
-  return {data, columns}
+  data = data.map(row => row.map(cell => Number(cell.trim().replace(decimal, "."))))
+
+  return { data, columns }
 }
 
 const readFile = (file) => {
@@ -83,30 +104,57 @@ export const loadData = (event) => {
       delimiter,
       decimal,
       header
-    } = getState()
-    
+    } = getState().data
+
     readFile(file).then(dataString => {
-      
+
       let result = processCsv(dataString, delimiter, decimal, header)
       dispatch(dataLoaded(result.data, result.columns, dataString))
-    
+
     })
   }
 }
 
-export const setDelimiter = (event) => {
-  let sep = [",", ",", " ", ":", ";"][event.target.selectedIndex]
-  console.log(sep)
+export const set_Delimiter = (event) => {
+  let delimiter = [",", ",", " ", ":", ";"][event.target.selectedIndex]
+  return (dispatch, getState) => {
+
+    const {
+      dataString,
+      decimal,
+      header
+    } = getState().data
+
+    let result = processCsv(dataString, delimiter, decimal, header)
+    dispatch(updateDelimiter(result.data, result.columns, delimiter))
+  }
 }
 
-export const setHeader = (event) => {
+export const set_Decimal = (event) => {
+  let decimal = [".", ".", ","][event.target.selectedIndex]
   return (dispatch, getState) => {
+
+    const {
+      dataString,
+      delimiter,
+      header
+    } = getState().data
+
+    let result = processCsv(dataString, delimiter, decimal, header)
+    dispatch(updateDecimal(result.data, result.columns, decimal))
+  }
+}
+
+export const set_Header = (event) => {
+  return (dispatch, getState) => {
+
     const {
       dataString,
       delimiter,
       decimal,
       header
-    } = getState()
+    } = getState().data
+
     let result = processCsv(dataString, delimiter, decimal, !header)
     dispatch(updateHeader(result.data, result.columns, !header))
   }
@@ -114,45 +162,19 @@ export const setHeader = (event) => {
 
 export const plot_Chart = (event) => {
   const chart = [null, xbar_rbar, xbar_sbar, rbar, sbar, ewma, cusum][event.target.selectedIndex]
-  
+
   return (dispatch, getState) => {
-    const { data } = getState()
-    
-    const labels = data.map((_, i) => i+1)
-
-    const limits = {
-      lineTension: 0,
-      pointRadius: 0,
-      backgroundColor: "#2eb872",
-      fill: 2,
-    }
-
-    const points = {
-      lineTension: 0,
-      pointRadius: 3,
-      borderColor: "#f54d42",
-      pointBackgroundColor: "#f54d42",
-      fill: false,
-    }
-    
     if (chart) {
 
-      const {values, center, lcl, ucl, title, options} = chart(data)
+      const { data } = getState().data
+      const labels = data.map((_, i) => i + 1)
 
-      const lower = Array.isArray(lcl) ? lcl : labels.map(_ => lcl)
-      const upper = Array.isArray(ucl) ? ucl : labels.map(_ => ucl)
-      
-      const datasets = [
-        {...points, data: values},
-        {...limits, ...options, data: lower},
-        {...limits, ...options, data: upper}        
-      ]
-      
-      dispatch(setChart(datasets, labels, title))
+      const { datasets, title, ticks } = chart(data)
+      dispatch(setChart(datasets, labels, title, ticks))
     }
   }
 }
 
-export const setTarget = () => {
+export const set_Target = () => {
 
 }

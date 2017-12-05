@@ -2,34 +2,21 @@ import {
   TOGGLE_MODAL,
   DATA_LOADED,
   UPDATE_HEADER,
-  SET_CHART
+  UPDATE_DELIMITER,
+  UPDATE_DECIMAL
 } from "./constants"
 
 const initialState = {
   closed: true,
   delimiter: ",",
   decimal: ".",
-  dataString: " ",
+  dataString: "",
   data: null,
   header: false,
   columns: [],
-  labels: [1, 2, 3, 4, 5, 6],
-  datasets: [{
-    data: [12, 19, 3, 5, 2, 3],
-    lineTension: 0,
-    pointRadius: 0,
-    fill: 1,
-  },
-  {
-    data: [6, 9, 1, 2, 1 ,1],
-    lineTension: 0,
-    pointRadius: 0,
-    fill: 1
-  }],
-  title: ""
 }
 
-const rootReducer = (state = initialState, action) => {
+const dataReducer = (state = initialState, action) => {
   switch (action.type) {
     case TOGGLE_MODAL:
       return {
@@ -50,16 +37,23 @@ const rootReducer = (state = initialState, action) => {
         columns: action.columns,
         header: action.header
       }
-    case SET_CHART:
+    case UPDATE_DELIMITER:
       return {
         ...state,
-        labels: action.labels,
-        datasets: action.datasets,
-        title: action.title
+        data: action.data,
+        columns: action.columns,
+        delimiter: action.delimiter
+      }
+    case UPDATE_DECIMAL:
+      return {
+        ...state,
+        data: action.data,
+        columns: action.columns,
+        decimal: action.decimal
       }
     default:
       return state
   }
 }
 
-export default rootReducer
+export default dataReducer

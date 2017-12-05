@@ -1,3 +1,13 @@
+@keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+  
+    to {
+      opacity: 1;
+    }
+}
+
 .modal {
     position: absolute;
     top: 0%;
@@ -16,6 +26,7 @@
         "   .   datagrid   ."
         "   .   datagrid   ."
         "   .   .   .";
+    animation: fadeIn 500ms ease;
 }
 
 .options {

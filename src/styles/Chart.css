@@ -2,8 +2,10 @@
   grid-area: chart;
   position: relative;
   display: flex;
+  flex-direction: column;
   align-content: center;
-  justify-content: center; }
+  justify-content: flex-start; }
   .chart > canvas {
-    position: absolute;
-    background-color: azure; }
+    background: #f6f6f6;
+    border-radius: 4px;
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.5); }
