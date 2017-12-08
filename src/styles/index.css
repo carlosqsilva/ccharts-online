@@ -34,25 +34,140 @@ html, body {
   left: 0%;
   right: 0%;
   z-index: 50;
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: rgba(0, 0, 0, 0.85);
+  padding: 50px;
   display: grid;
   grid-gap: 10px;
-  grid-template-columns: 1fr minmax(1000px, 1200px) 1fr;
-  grid-template-rows: 50px 60px 1fr 1fr 50px;
-  grid-template-areas: "   .   .   ." "   .   options   ." "   .   datagrid   ." "   .   datagrid   ." "   .   .   .";
+  grid-template-columns: auto minmax(1000px, 1200px) auto;
+  grid-template-rows: 60px 2fr;
+  grid-template-areas: "   .   options    ." "   .   datagrid   ." "   .   datagrid   .";
   animation: fadeIn 500ms ease; }
 
 .options {
   grid-area: options;
-  padding: 0.5rem;
+  position: relative;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center; }
 
-.options > a {
+.closeBtn {
+  position: absolute;
+  right: 0;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
   cursor: pointer; }
-  .options > a > img {
-    vertical-align: middle; }
+  .closeBtn > span {
+    color: whitesmoke;
+    font-size: 1.5rem;
+    transform: translateX(30px);
+    opacity: 0;
+    transition: all 500ms ease; }
+  .closeBtn:hover > span {
+    opacity: 1;
+    transform: translateX(0); }
+
+.dataGrid {
+  grid-area: datagrid;
+  background-color: whitesmoke;
+  border: 1px solid #dbdbdb;
+  border-radius: 3px;
+  overflow: scroll;
+  padding: 3px; }
+  .dataGrid table {
+    width: 100%;
+    height: 100%;
+    border-collapse: collapse;
+    border-spacing: 0px; }
+    .dataGrid table tr:nth-child(even) {
+      background-color: #dbdbdb; }
+    .dataGrid table td, .dataGrid table th {
+      text-align: left;
+      line-height: 1.6rem;
+      border: 1px solid #4e4e4e;
+      border-width: 0 0 1px; }
+
+.header {
+  grid-area: header;
+  display: flex;
+  align-items: center;
+  justify-content: space-between; }
+
+.logo {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.6rem;
+  color: #2c2e3e; }
+  .logo > img {
+    width: 50px;
+    height: 50px;
+    margin-right: 10px; }
+  .logo:hover .hide {
+    opacity: 1; }
+  .logo:hover .last {
+    transform: translateX(15px); }
+  .logo .hide {
+    opacity: 0;
+    transition: all 500ms ease; }
+  .logo .last {
+    display: inline-block;
+    transform: translateX(-95px);
+    transition: transform 500ms ease; }
+
+.repo {
+  flex-grow: 0;
+  flex-shrink: 0;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  text-decoration: none;
+  color: #2c2e3e; }
+  .repo > img {
+    width: 30px;
+    height: 30px;
+    margin: 0 5px; }
+
+.controls {
+  grid-area: controls;
+  padding: 0.5rem 0;
+  display: flex;
+  justify-content: flex-start; }
+
+.marginRight {
+  margin-right: 20px; }
+
+.button {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  line-height: 1;
+  color: #4e4e4e;
+  border-radius: 3px;
+  border: 1px solid #dbdbdb;
+  background-color: whitesmoke;
+  padding: 0.6rem; }
+
+.input {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.6rem;
+  color: #4e4e4e;
+  border-radius: 3px;
+  border: 1px solid #dbdbdb;
+  background-color: whitesmoke; }
+  .input > input[type=text] {
+    color: #4e4e4e;
+    width: 80px;
+    margin: 0 0 0 10px;
+    text-align: center;
+    line-height: 1.5;
+    background-color: whitesmoke;
+    border: none;
+    border-bottom: 1px solid #dbdbdb; }
 
 .fileInput {
   display: flex;
@@ -109,120 +224,6 @@ html, body {
   .checkBox > input[type=checkbox] {
     margin-right: 0.5rem; }
 
-.dataGrid {
-  grid-area: datagrid;
-  background-color: whitesmoke;
-  border: 1px solid #dbdbdb;
-  border-radius: 3px;
-  overflow: scroll;
-  padding: 3px; }
-  .dataGrid table {
-    width: 100%;
-    height: 100%;
-    border-collapse: collapse;
-    border-spacing: 0px; }
-    .dataGrid table tr:nth-child(even) {
-      background-color: #dbdbdb; }
-    .dataGrid table td, .dataGrid table th {
-      text-align: left;
-      line-height: 1.6rem;
-      border: 1px solid #4e4e4e;
-      border-width: 0 0 1px; }
-
-.header {
-  grid-area: header;
-  display: flex;
-  align-items: center;
-  justify-content: space-between; }
-
-.logo {
-  font-size: 1.6rem;
-  color: #2c2e3e; }
-  .logo:hover .hide {
-    opacity: 1; }
-  .logo:hover .last {
-    transform: translateX(15px); }
-  .logo .hide {
-    opacity: 0;
-    transition: all 500ms ease; }
-  .logo .last {
-    display: inline-block;
-    transform: translateX(-95px);
-    transition: transform 500ms ease; }
-
-.author {
-  flex-grow: 0;
-  flex-shrink: 0;
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-  text-decoration: none;
-  color: #2c2e3e;
-  line-height: 1.1rem;
-  font-size: 1rem; }
-
-.repo {
-  flex-grow: 0;
-  flex-shrink: 0;
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-  text-decoration: none;
-  color: #2c2e3e; }
-
-.headerImage {
-  width: 30px;
-  height: 30px;
-  margin: 0 5px; }
-
-@keyframes pound {
-  to {
-    transform: scale(1.1); } }
-
-.pulse {
-  animation: pound 800ms infinite alternate; }
-
-.controls {
-  grid-area: controls;
-  padding: 0.5rem 0;
-  display: flex;
-  justify-content: flex-start; }
-  .controls > a {
-    margin-right: 50px; }
-
-.button {
-  appearance: none;
-  display: inline-flex;
-  align-items: center;
-  cursor: pointer;
-  line-height: 1;
-  color: #4e4e4e;
-  border-radius: 3px;
-  border: 1px solid #dbdbdb;
-  background-color: whitesmoke;
-  padding: 0.6rem; }
-
-.input {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0.6rem;
-  color: #4e4e4e;
-  border-radius: 3px;
-  border: 1px solid #dbdbdb;
-  background-color: whitesmoke; }
-  .input > input[type=text] {
-    color: #4e4e4e;
-    width: 80px;
-    margin: 0 0 0 10px;
-    text-align: center;
-    line-height: 1.5;
-    background-color: whitesmoke;
-    border: none;
-    border-bottom: 1px solid #dbdbdb; }
-
 .chart {
   grid-area: chart;
   position: relative;
@@ -234,3 +235,57 @@ html, body {
     background: #f6f6f6;
     border-radius: 4px;
     box-shadow: 0 0 2px rgba(0, 0, 0, 0.5); }
+
+@keyframes fadetoright {
+  from {
+    opacity: 0;
+    transform: translateX(-30px); }
+  to {
+    opacity: 1;
+    transform: translateX(0); } }
+
+@keyframes fadetobottom {
+  from {
+    opacity: 0;
+    transform: translateY(-30px); }
+  to {
+    opacity: 1;
+    transform: translateX(0); } }
+
+.fadeToRight {
+  animation: fadetoright 500ms ease; }
+
+.information {
+  animation: fadetobottom 600ms ease; }
+
+.description a {
+  color: black;
+  font-weight: 700;
+  text-decoration: none; }
+
+.author {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  text-decoration: none;
+  color: black;
+  font-size: 0.9rem; }
+  .author > img {
+    width: 10px;
+    height: 10px;
+    margin: 0 5px;
+    animation: pound 1.2s infinite alternate; }
+  .author > span {
+    margin: 0 5px;
+    transition: all 300ms ease; }
+  .author:hover > span {
+    font-weight: 700;
+    color: white; }
+
+@keyframes pound {
+  to {
+    transform: scale(1.4); } }

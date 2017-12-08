@@ -19,13 +19,13 @@ const Modal = (props) => {
         
         <div className="options">
           
-          <label className="fileInput">
+          <label className="fileInput marginRight">
             <input onChange={readFile} type="file" accept=".csv,.txt"/>
             <img src={csv} alt=""/>
             <span>Choose a file</span>
           </label>
 
-          <div className="comboBox">
+          <div className="comboBox marginRight">
             <select onChange={setDelimiter}>
               <option>Delimiter</option>
               <option>Comma</option>
@@ -35,7 +35,7 @@ const Modal = (props) => {
             </select>
           </div>
 
-          <div className="comboBox">
+          <div className="comboBox marginRight">
             <select onChange={setDecimal}>
               <option>Decimal</option>
               <option>Option "."</option>
@@ -43,14 +43,18 @@ const Modal = (props) => {
             </select>
           </div>
 
-          <label className="checkBox">
+          <label className="checkBox marginRight">
             <input onClick={setHeader} type="checkbox" />
             Has header
           </label>
 
-          <a onClick={toggleModal} ><img src={close} alt=""/></a>
+          <a className="closeBtn" onClick={toggleModal} >
+            <span>Close</span>
+            <img src={close} alt="x"/>
+          </a>
 
         </div>
+
         <div className="dataGrid">
           {modal.data && 
             <table>

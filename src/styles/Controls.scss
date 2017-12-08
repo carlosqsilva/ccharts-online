@@ -3,11 +3,12 @@
     padding: 0.5rem 0;
     display: flex;
     justify-content: flex-start;
-    
-    > a {
-        margin-right: 50px;
-    }
 }
+
+.marginRight {
+    margin-right: 20px;
+}
+
 .button {
     appearance: none;
     display: inline-flex;
@@ -40,5 +41,74 @@
         background-color: whitesmoke;
         border: none;
         border-bottom: 1px solid #dbdbdb;
+    }
+}
+
+.fileInput {
+    display: flex;
+    justify-content: center;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    background-color: whitesmoke;
+    color: #4e4e4e;
+    border: 1px solid #dbdbdb;
+    border-radius: 3px;
+    line-height: 1.5rem;
+    padding: 0.6rem;
+    
+    > input[type=file] {
+        outline: none;
+        position: absolute;
+        left: 0;
+        width: 0.1px;
+        height: 0.1px;
+        opacity: 0;
+        overflow: hidden;
+    }
+
+    > img {
+        width: 20px;
+        height: 20px;
+        margin-right: 0.5rem;
+    }
+}
+
+.comboBox {
+    border: 1px solid #dbdbdb;
+    width: 150px;
+    border-radius: 3px;
+    overflow: hidden;
+    background: whitesmoke url("../assets/down-arrow.svg") no-repeat 92% 50%;
+
+    > select {
+        font-family: "Space Mono", monospace, sans-serif;
+        line-height: 1.5rem;
+        padding: 0.6rem;
+        width: 100%;
+        color: #4e4e4e;
+        border: none;
+        box-shadow: none;
+        background: transparent;
+        background-image: none;
+        appearance: none;
+
+        &:focus {
+            outline: none;
+        }
+    }
+}
+
+.checkBox {
+    border: 1px solid #dbdbdb;
+    background-color: whitesmoke;
+    color: #4e4e4e;
+    padding: 0.6rem;
+    border-radius: 3px;
+    cursor: pointer;
+
+    > input[type=checkbox] {
+        margin-right: 0.5rem;
+        // vertical-align: middle;
     }
 }

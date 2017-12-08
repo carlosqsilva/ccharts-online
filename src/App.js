@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
 import './styles/index.css';
-import Navbar from "./components/Navbar";
-import Modal from "./components/Modal";
-import ChartComponent from "./components/Chart";
+
+import { Author, Header, Chart, Modal } from "./components"
 
 class App extends Component {
   render() {
     return (
       <div className="App">
         <Modal />
-        <Navbar />
-        <ChartComponent />
+        <Header />
+        <Chart />
+        <Author />
       </div>
     );
   }

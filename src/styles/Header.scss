@@ -1,17 +1,22 @@
 .header {
     grid-area: header;
-    // z-index: 100;
-    // padding: 0px 20px;
-    // background-color: #00385e;
-    // box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.25);
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
 
 .logo {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
     font-size: 1.6rem;
     color: #2c2e3e;
+
+    > img {
+        width: 50px;
+        height: 50px;
+        margin-right: 10px;
+    }
 
     &:hover {
         .hide {
@@ -35,20 +40,6 @@
     }    
 }
 
-.author {
-    flex-grow: 0;
-    flex-shrink: 0;
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    text-decoration: none;
-    color: #2c2e3e;
-    line-height: 1.1rem;
-    font-size: 1rem;
-    // transform: translateX(-50%)
-}
-
 .repo {
     flex-grow: 0;
     flex-shrink: 0;
@@ -58,20 +49,10 @@
     cursor: pointer;
     text-decoration: none;
     color: #2c2e3e;
-}
 
-.headerImage {
-    width: 30px;
-    height: 30px;
-    margin: 0 5px;
-}
-
-@keyframes pound {
-    to {
-        transform: scale(1.1)
+    > img {
+        width: 30px;
+        height: 30px;
+        margin: 0 5px;
     }
-}
-
-.pulse {
-    animation: pound 800ms infinite alternate;
 }

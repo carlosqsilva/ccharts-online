@@ -95,16 +95,16 @@ class ChartComponent extends Component {
 
   render(){
 
-    const { displayInfo, title } = this.props.plot
+    const { displayInfo, title, ticks } = this.props.plot
     const { toggleModal, plotChart} = this.props
 
     return (
       <div className="chart" ref={parent => this.parent = parent}>
         <div className="controls">
 
-          <a className="button" onClick={toggleModal}>Import Data</a>
+          <a className="button  marginRight" onClick={toggleModal}>Import Data</a>
 
-          <div className="comboBox">
+          <div className="comboBox  marginRight">
             <select onChange={plotChart}>
               <option>Charts</option>
               <option>Xbar_Rbar</option>
@@ -117,10 +117,9 @@ class ChartComponent extends Component {
           </div>
 
           {
-            displayInfo ? 
+            displayInfo &&
             <a ref={element => this.download = element}
-            className="button" onClick={this.downloadChart}>Download</a>
-            : null
+            className="button fadeToRight" onClick={this.downloadChart}>Download</a>
           }
 
         </div>
@@ -129,12 +128,24 @@ class ChartComponent extends Component {
 
         {
           displayInfo ?
-          <div>
-            <h1>{title}</h1>
+          <div className="information">
+            
+            <div>
+              <h1>{title}</h1>
+              <div><b>Lower Control Limit: </b> {ticks.ucl.toFixed(4)}</div>
+              <div><b>Center: </b> {ticks.center.toFixed(4)}</div>
+              <div><b>Upper Control Limit: </b> {ticks.lcl.toFixed(4)}</div>
+            </div>
+
+            <div>
+
+            </div>
+
           </div> :
-          <div>
+
+          <div className="description">
             <h2>What is this!?</h2>
-            <p>lorem ipsum</p>
+            <p>The control chart is one of the seven basic tools of quality control. Typically control charts are used for time-series data, though they can be used for data that have logical comparability (i.e. you want to compare samples that were taken all at the same time, or the performance of different individuals); however the type of chart used to do this requires consideration.<a href="https://en.wikipedia.org/wiki/Control_chart">- Wikipedia</a></p>
           </div>          
         }
               

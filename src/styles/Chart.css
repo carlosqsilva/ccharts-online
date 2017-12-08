@@ -9,3 +9,30 @@
     background: #f6f6f6;
     border-radius: 4px;
     box-shadow: 0 0 2px rgba(0, 0, 0, 0.5); }
+
+@keyframes fadetoright {
+  from {
+    opacity: 0;
+    transform: translateX(-30px); }
+  to {
+    opacity: 1;
+    transform: translateX(0); } }
+
+@keyframes fadetobottom {
+  from {
+    opacity: 0;
+    transform: translateY(-30px); }
+  to {
+    opacity: 1;
+    transform: translateX(0); } }
+
+.fadeToRight {
+  animation: fadetoright 500ms ease; }
+
+.information {
+  animation: fadetobottom 600ms ease; }
+
+.description a {
+  color: black;
+  font-weight: 700;
+  text-decoration: none; }

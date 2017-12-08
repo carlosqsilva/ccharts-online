@@ -15,101 +15,49 @@
     left: 0%;
     right: 0%;
     z-index: 50;
-    background-color: rgba(0, 0, 0, 0.7);
+    background-color: rgba(0, 0, 0, 0.85);
+    padding: 50px;
     display: grid;
     grid-gap: 10px;
-    grid-template-columns: 1fr minmax(1000px, 1200px) 1fr;
-    grid-template-rows: 50px 60px 1fr 1fr 50px;
+    grid-template-columns: auto minmax(1000px, 1200px) auto;
+    grid-template-rows: 60px 2fr;
     grid-template-areas: 
-        "   .   .   ."
-        "   .   options   ."
+        "   .   options    ."
         "   .   datagrid   ."
-        "   .   datagrid   ."
-        "   .   .   .";
+        "   .   datagrid   .";
     animation: fadeIn 500ms ease;
 }
 
 .options {
     grid-area: options;
-    padding: 0.5rem;
+    position: relative;
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
 }
 
-.options > a {
-    cursor: pointer;
-    > img {
-        vertical-align: middle;
-    }
-}
+.closeBtn {
+    position: absolute;
+    right: 0;
 
-.fileInput {
-    display: flex;
+    display: inline-flex;
     justify-content: center;
+    align-items: center;
     cursor: pointer;
-    position: relative;
-    overflow: hidden;
-    background-color: whitesmoke;
-    color: #4e4e4e;
-    border: 1px solid #dbdbdb;
-    border-radius: 3px;
-    line-height: 1.5rem;
-    padding: 0.6rem;
-    
-    > input[type=file] {
-        outline: none;
-        position: absolute;
-        left: 0;
-        width: 0.1px;
-        height: 0.1px;
+
+    > span {
+        color: whitesmoke;
+        font-size: 1.5rem;
+        transform: translateX(30px);
         opacity: 0;
-        overflow: hidden;
+        transition: all 500ms ease;
     }
 
-    > img {
-        width: 20px;
-        height: 20px;
-        margin-right: 0.5rem;
-    }
-}
-
-.comboBox {
-    border: 1px solid #dbdbdb;
-    width: 150px;
-    border-radius: 3px;
-    overflow: hidden;
-    background: whitesmoke url("../assets/down-arrow.svg") no-repeat 92% 50%;
-
-    > select {
-        font-family: "Space Mono", monospace, sans-serif;
-        line-height: 1.5rem;
-        padding: 0.6rem;
-        width: 100%;
-        color: #4e4e4e;
-        border: none;
-        box-shadow: none;
-        background: transparent;
-        background-image: none;
-        appearance: none;
-
-        &:focus {
-            outline: none;
+    &:hover {
+        > span {
+            opacity: 1;
+            transform: translateX(0)
         }
-    }
-}
-
-.checkBox {
-    border: 1px solid #dbdbdb;
-    background-color: whitesmoke;
-    color: #4e4e4e;
-    padding: 0.6rem;
-    border-radius: 3px;
-    cursor: pointer;
-
-    > input[type=checkbox] {
-        margin-right: 0.5rem;
-        // vertical-align: middle;
     }
 }
 
