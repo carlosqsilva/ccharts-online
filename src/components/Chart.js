@@ -2,6 +2,7 @@ import React, { Component } from "react"
 import { connect } from "react-redux"
 import Chart from "chart.js"
 import { toggle_modal, plot_Chart } from "../store/actions"
+import { alarm } from "../assets"
 
 const options = (ticks, title, datasets, labels) => {
   return {
@@ -55,6 +56,13 @@ const options = (ticks, title, datasets, labels) => {
   }
 }
 
+const description = {
+  "XBAR Rbar": "If the sample size is relatively small (say equal to or less than 10), we can use the range instead of the standard deviation of a sample to construct control charts on X and the range, R. The range of a sample is simply the difference between the largest and smallest observation.",
+  "XBAR Sbar": "X-s chart is very similar to the  X-R chart. The major difference is that the subgroup standard deviation is plotted when using the  X-s chart, while the subgroup range is plotted when using the  X-R chart. One advantage of using the standard deviation instead of the range is that the standard deviation takes into account all the data, not just the maximum and the minimum. As for the  X-R chart, frequent data and a method of rationally subgrouping the data are required to use the Xbar-s chart.",
+  EWMA: "The Exponentially Weighted Moving Average (EWMA) is a statistic for monitoring the process that averages the data in a way that gives less and less weight to data as they are further removed in time.",
+  CUSUM: "CUSUM charts, while not as intuitive and simple to operate as Shewhart charts, have been shown to be more efficient in detecting small shifts in the mean of a process. In particular, analyzing Average Run Length for CUSUM control charts shows that they are better than Shewhart control charts when it is desired to detect shifts in the mean that are 2 sigma or less."
+}
+
 class ChartComponent extends Component {
 
   componentDidMount() {
@@ -73,7 +81,7 @@ class ChartComponent extends Component {
   shouldComponentUpdate(nextProps) {
     const { labels, datasets} = this.props.plot
     
-    if (labels !== nextProps.plot.labels || datasets !== nextProps.plot.datasets) {
+    if (labels !== nextProps.plot.labels || datasets !== nextProps.plot.datasets || nextProps.plot.displayAlarm) {
       return true
     }
     return false
@@ -95,7 +103,7 @@ class ChartComponent extends Component {
 
   render(){
 
-    const { displayInfo, title, ticks } = this.props.plot
+    const { displayInfo, displayAlarm, title, ticks } = this.props.plot
     const { toggleModal, plotChart} = this.props
 
     return (
@@ -122,6 +130,11 @@ class ChartComponent extends Component {
             className="button fadeToRight" onClick={this.downloadChart}>Download</a>
           }
 
+          {
+            displayAlarm &&
+            <div className="alarm"><img src={alarm} alt="Alarm" /> You firts need to import a dataset.</div>
+          }
+
         </div>
 
         <canvas ref={element => this.element = element} />
@@ -138,7 +151,9 @@ class ChartComponent extends Component {
             </div>
 
             <div>
-
+              {
+                description[title]
+              }              
             </div>
 
           </div> :

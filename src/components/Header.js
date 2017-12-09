@@ -10,7 +10,7 @@ const Header = () => {
       C<span className="hide">ontrol</span>
       <div className="last">Chart online</div></div>
       
-      <a className="repo" >Github
+      <a className="repo" href="https://github.com/carlosqsilva/ccharts-online">Github
         <img src={github} alt="Github" />
       </a>
 

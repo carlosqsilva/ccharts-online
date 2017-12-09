@@ -1,28 +1,51 @@
 import {
-  SET_CHART
+  SET_CHART,
+  DISPLAY_ALARM
 } from "./constants"
 
 const initialState = {
-  labels: [1, 2, 3, 4, 5, 6],
-  datasets: [{
-    data: [12, 19, 3, 5, 2, 3],
-    lineTension: 0,
-    pointRadius: 0,
-    fill: 1,
-  },
-  {
-    data: [6, 9, 1, 2, 1 ,1],
-    lineTension: 0,
-    pointRadius: 0,
-    fill: 1
-  }],
+  labels: [1, 2, 3, 4],
+  datasets: [
+    {
+      data: [7.5, 12.5, 7.5, 10],
+      lineTension: 0,
+      borderColor: "#003459",
+      pointRadius: 3,
+      pointBorderWidth: 0,
+      pointBackgroundColor: ["#f54d42", "#f54d42", "#f54d42", "#259f6c"],
+      fill: false
+    },
+    {
+      data: [10, 10, 10, 10],
+      lineTension: 0,
+      pointRadius: 0,
+      fill: false
+    },
+    {
+      data: [12, 12, 12, 12],
+      lineTension: 0,
+      pointRadius: 0,
+      borderColor: "#ee2b47",
+      borderWidth: 2,
+      fill: 1,
+    },
+    {
+      data: [8, 8, 8, 8],
+      lineTension: 0,
+      pointRadius: 0,
+      borderColor: "#ee2b47",
+      borderWidth: 2,
+      fill: 1
+    }
+  ],
   title: "",
   ticks: {
-    ucl: 19,
+    ucl: 12,
     center: 10,
-    lcl: 2
+    lcl: 8
   },
-  displayInfo: false
+  displayInfo: false,
+  displayAlarm: false
 }
 
 const plotReducer = (state = initialState, action) => {
@@ -34,7 +57,13 @@ const plotReducer = (state = initialState, action) => {
         datasets: action.datasets,
         title: action.title,
         ticks: action.ticks,
-        displayInfo: true
+        displayInfo: true,
+        displayAlarm: false
+      }
+    case DISPLAY_ALARM:
+      return {
+        ...state,
+        displayAlarm: action.display
       }
     default:
       return state

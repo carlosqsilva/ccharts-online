@@ -16,7 +16,7 @@ html, body {
 .App {
     display: grid;
     grid-gap: 30px;
-    grid-template-columns: 1fr minmax(900px, 1200px) 1fr;
+    grid-template-columns: 1fr minmax(800px, 1200px) 1fr;
     grid-template-rows: 55px auto;
     grid-template-areas: 
     ".      header       ."

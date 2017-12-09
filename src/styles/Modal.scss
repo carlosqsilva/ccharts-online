@@ -19,11 +19,10 @@
     padding: 50px;
     display: grid;
     grid-gap: 10px;
-    grid-template-columns: auto minmax(1000px, 1200px) auto;
-    grid-template-rows: 60px 2fr;
+    grid-template-columns: 1fr minmax(800px, 1200px) 1fr;
+    grid-template-rows: 60px 1fr;
     grid-template-areas: 
         "   .   options    ."
-        "   .   datagrid   ."
         "   .   datagrid   .";
     animation: fadeIn 500ms ease;
 }

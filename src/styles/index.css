@@ -13,7 +13,7 @@ html, body {
 .App {
   display: grid;
   grid-gap: 30px;
-  grid-template-columns: 1fr minmax(900px, 1200px) 1fr;
+  grid-template-columns: 1fr minmax(800px, 1200px) 1fr;
   grid-template-rows: 55px auto;
   grid-template-areas: ".      header       ." ".      chart        .";
   width: 100vw;
@@ -38,9 +38,9 @@ html, body {
   padding: 50px;
   display: grid;
   grid-gap: 10px;
-  grid-template-columns: auto minmax(1000px, 1200px) auto;
-  grid-template-rows: 60px 2fr;
-  grid-template-areas: "   .   options    ." "   .   datagrid   ." "   .   datagrid   .";
+  grid-template-columns: 1fr minmax(800px, 1200px) 1fr;
+  grid-template-rows: 60px 1fr;
+  grid-template-areas: "   .   options    ." "   .   datagrid   .";
   animation: fadeIn 500ms ease; }
 
 .options {
@@ -232,6 +232,7 @@ html, body {
   align-content: center;
   justify-content: flex-start; }
   .chart > canvas {
+    margin-top: 10px;
     background: #f6f6f6;
     border-radius: 4px;
     box-shadow: 0 0 2px rgba(0, 0, 0, 0.5); }
@@ -255,8 +256,26 @@ html, body {
 .fadeToRight {
   animation: fadetoright 500ms ease; }
 
+.alarm {
+  display: inline-flex;
+  align-items: center;
+  animation: fadetoright 300ms ease; }
+  .alarm > img {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px; }
+
 .information {
+  display: inline-grid;
+  grid-template-columns: 1fr 2fr;
+  padding: 30px 0 0 0;
   animation: fadetobottom 600ms ease; }
+  .information h1 {
+    margin-top: 0; }
+  .information > div:last-child {
+    font-size: 1rem;
+    display: inline-flex;
+    align-items: center; }
 
 .description a {
   color: black;

@@ -11,7 +11,7 @@ const initialState = {
   delimiter: ",",
   decimal: ".",
   dataString: "",
-  data: null,
+  data: false,
   header: false,
   columns: [],
 }

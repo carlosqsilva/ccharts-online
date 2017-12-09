@@ -56,7 +56,11 @@ module.exports = {
   // You can exclude the *.map files from the build during deployment.
   devtool: shouldUseSourceMap ? 'source-map' : false,
   // In production, we only want to load the polyfills and the app code.
-  entry: [require.resolve('./polyfills'), paths.appIndexJs],
+  entry: 
+    [
+      // require.resolve('./polyfills'),
+      paths.appIndexJs
+    ],
   output: {
     // The build folder.
     path: paths.appBuild,
@@ -315,6 +319,12 @@ module.exports = {
         console.log(message);
       },
       minify: true,
+      runtimeCaching: [
+        {
+          urlPattern: /^https:\/\/fonts\.googleapis\.com\//,
+          handler: 'cacheFirst',
+        },
+      ],
       // For unknown URLs, fallback to the index page
       navigateFallback: publicUrl + '/index.html',
       // Ignores URLs starting from /__ (useful for Firebase):

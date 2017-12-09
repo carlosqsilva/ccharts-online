@@ -5,6 +5,7 @@ import {
   UPDATE_DELIMITER,
   UPDATE_DECIMAL,
   SET_CHART,
+  DISPLAY_ALARM
 } from "./constants"
 
 import {
@@ -65,6 +66,13 @@ const setChart = (datasets, labels, title, ticks) => {
     labels,
     title,
     ticks
+  }
+}
+
+const displayAlarm = (display) => {
+  return {
+    type: DISPLAY_ALARM,
+    display
   }
 }
 
@@ -164,14 +172,26 @@ export const plot_Chart = (event) => {
   const chart = [null, xbar_rbar, xbar_sbar, rbar, sbar, ewma, cusum][event.target.selectedIndex]
 
   return (dispatch, getState) => {
-    if (chart) {
+    const { data } = getState().data
+    
+    if (!data) {
+    
+      dispatch(displayAlarm(true))
+    
+    } else {
 
-      const { data } = getState().data
-      const labels = data.map((_, i) => i + 1)
+      if (chart) {
 
-      const { datasets, title, ticks } = chart(data)
-      dispatch(setChart(datasets, labels, title, ticks))
+        // dispatch(displayAlarm(false))
+
+        const labels = data.map((_, i) => i + 1)
+  
+        const { datasets, title, ticks } = chart(data)
+        dispatch(setChart(datasets, labels, title, ticks))
+      }
+    
     }
+    
   }
 }
 

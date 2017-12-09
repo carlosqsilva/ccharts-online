@@ -6,6 +6,7 @@
   align-content: center;
   justify-content: flex-start; }
   .chart > canvas {
+    margin-top: 10px;
     background: #f6f6f6;
     border-radius: 4px;
     box-shadow: 0 0 2px rgba(0, 0, 0, 0.5); }
@@ -29,8 +30,26 @@
 .fadeToRight {
   animation: fadetoright 500ms ease; }
 
+.alarm {
+  display: inline-flex;
+  align-items: center;
+  animation: fadetoright 300ms ease; }
+  .alarm > img {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px; }
+
 .information {
+  display: inline-grid;
+  grid-template-columns: 1fr 2fr;
+  padding: 30px 0 0 0;
   animation: fadetobottom 600ms ease; }
+  .information h1 {
+    margin-top: 0; }
+  .information > div:last-child {
+    font-size: 1rem;
+    display: inline-flex;
+    align-items: center; }
 
 .description a {
   color: black;

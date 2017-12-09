@@ -1,7 +1,8 @@
 {
-  "name": "spc-charts-online",
+  "name": "ccharts-online",
   "version": "0.1.0",
   "private": true,
+  "homepage" : "http://myname.github.io/ccharts-online",
   "dependencies": {
     "autoprefixer": "7.1.6",
     "babel-core": "6.26.0",
