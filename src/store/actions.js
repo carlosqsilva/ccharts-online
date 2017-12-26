@@ -182,8 +182,6 @@ export const plot_Chart = (event) => {
 
       if (chart) {
 
-        // dispatch(displayAlarm(false))
-
         const labels = data.map((_, i) => i + 1)
   
         const { datasets, title, ticks } = chart(data)
@@ -193,8 +191,4 @@ export const plot_Chart = (event) => {
     }
     
   }
-}
-
-export const set_Target = () => {
-
 }
