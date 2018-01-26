@@ -1,10 +1,4 @@
-import {
-  TOGGLE_MODAL,
-  DATA_LOADED,
-  UPDATE_HEADER,
-  UPDATE_DELIMITER,
-  UPDATE_DECIMAL
-} from "./constants"
+import { TOGGLE_MODAL, DATA_LOADED, UPDATE_HEADER, UPDATE_DELIMITER, UPDATE_DECIMAL } from "./constants"
 
 const initialState = {
   closed: true,
@@ -13,7 +7,7 @@ const initialState = {
   dataString: "",
   data: false,
   header: false,
-  columns: [],
+  columns: []
 }
 
 const dataReducer = (state = initialState, action) => {

@@ -1,7 +1,4 @@
-import {
-  SET_CHART,
-  DISPLAY_ALARM
-} from "./constants"
+import { SET_CHART, DISPLAY_ALARM } from "./constants"
 
 const initialState = {
   labels: [1, 2, 3, 4],
@@ -27,7 +24,7 @@ const initialState = {
       pointRadius: 0,
       borderColor: "#ee2b47",
       borderWidth: 2,
-      fill: 1,
+      fill: 1
     },
     {
       data: [8, 8, 8, 8],

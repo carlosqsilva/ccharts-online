@@ -1,19 +1,22 @@
-import React, { Component } from 'react';
-import './styles/index.css';
+import React, { Component } from "react"
+import "./styles/index.css"
 
-import { Author, Header, Chart, Modal } from "./components"
+import { Author, Header, Chart, Modal, GitCorner } from "./components"
+
+const Fragment = React.Fragment
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
+      <Fragment>
         <Modal />
         <Header />
         <Chart />
         <Author />
-      </div>
-    );
+        <GitCorner />
+      </Fragment>
+    )
   }
 }
 
-export default App;
+export default App
