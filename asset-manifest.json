@@ -1,12 +1,12 @@
 {
-  "main.css": "static/css/main.f89b7624.css",
-  "main.css.map": "static/css/main.f89b7624.css.map",
-  "main.js": "static/js/main.2278ad78.js",
-  "main.js.map": "static/js/main.2278ad78.js.map",
+  "main.css": "static/css/main.b8cfda4f.css",
+  "main.css.map": "static/css/main.b8cfda4f.css.map",
+  "main.js": "static/js/main.88da21fb.js",
+  "main.js.map": "static/js/main.88da21fb.js.map",
   "static/media/alarm.svg": "static/media/alarm.deceb4ae.svg",
-  "static/media/csv.svg": "static/media/csv.c0417c34.svg",
-  "static/media/down-arrow.svg": "static/media/down-arrow.b1e8435a.svg",
-  "static/media/github.svg": "static/media/github.1229267e.svg",
+  "static/media/arrow.svg": "static/media/arrow.1eb98c6a.svg",
+  "static/media/csv.svg": "static/media/csv.e802be3f.svg",
+  "static/media/github.svg": "static/media/github.88153043.svg",
   "static/media/heart.svg": "static/media/heart.b8b11e81.svg",
   "static/media/logo.svg": "static/media/logo.6c8d8714.svg"
 }
