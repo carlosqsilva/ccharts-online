@@ -12,6 +12,7 @@ const Fragment = React.Fragment
 const Controls = styled.div`
   display: flex;
   justify-content: flex-start;
+  margin-bottom: 10px;
 `
 
 const Alarm = styled.div`

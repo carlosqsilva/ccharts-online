@@ -1,10 +1,11 @@
 import React from "react"
 import styled from "styled-components"
 import { connect } from "react-redux"
-import { toggle_modal, loadData, set_Delimiter, set_Decimal, set_Header } from "../../store/actions"
+import { toggle_modal, loadData, set_Delimiter, set_Decimal, set_Header, load_sample } from "../../store/actions"
 import { Select } from "../Inputs/select"
 import { CheckBox } from "../Inputs/checkBox"
 import { FileInput } from "../Inputs/fileInput"
+import { Button } from "../Inputs/button"
 import { DataTable } from "./table"
 import { Close } from "./closeModal"
 
@@ -36,7 +37,7 @@ const Container = styled.div`
 `
 
 const Modal = props => {
-  const { toggleModal, readFile, setHeader, setDelimiter, setDecimal, modal } = props
+  const { toggleModal, readFile, loadSample, setHeader, setDelimiter, setDecimal, modal } = props
 
   if (!modal.closed) {
     return (
@@ -49,6 +50,10 @@ const Modal = props => {
           <Select options={["Decimal", 'Option "."', 'Option ","']} handleChange={setDecimal} />
 
           <CheckBox handleClick={setHeader}>Has header</CheckBox>
+
+          <Button handleClick={loadSample} style={{ backgroundColor: "#393E46", color: "#FBFBFB" }}>
+            Import Example
+          </Button>
 
           <Close handleClick={toggleModal} />
         </Container>
@@ -69,7 +74,8 @@ const actions = dispatch => ({
   readFile: e => dispatch(loadData(e)),
   setHeader: e => dispatch(set_Header(e)),
   setDelimiter: e => dispatch(set_Delimiter(e)),
-  setDecimal: e => dispatch(set_Decimal(e))
+  setDecimal: e => dispatch(set_Decimal(e)),
+  loadSample: () => dispatch(load_sample())
 })
 
 export default connect(state, actions)(Modal)

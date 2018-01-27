@@ -6,7 +6,7 @@ const Wrapper = styled.a`
   display: inline-flex;
   align-items: center;
   cursor: pointer;
-  line-height: 1;
+  line-height: 1.5rem;
   color: #4e4e4e;
   border-radius: 3px;
   border: 1px solid #dbdbdb;

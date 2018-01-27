@@ -134,3 +134,13 @@ export const plot_Chart = event => (dispatch, getState) => {
     }
   }
 }
+
+export const load_sample = () => dispatch => {
+  const url = "https://raw.githubusercontent.com/carlosqsilva/ccharts-online/master/arquivo.csv"
+  fetch(url)
+    .then(data => data.text())
+    .then(data => {
+      let result = processCsv(data, ",", ".", true)
+      dispatch(dataLoaded(result.data, result.columns, data))
+    })
+}
