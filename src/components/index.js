@@ -1,7 +1,6 @@
-import Author from "./Author"
 import Chart from "./Chart"
-import Header from "./Header"
-import Modal from "./Modal"
+import Header from "./Header/Header"
+import Modal from "./Modal/Modal"
 import { GitCorner } from "./GitCorner"
 
-export { Author, Chart, Header, Modal, GitCorner }
+export { Chart, Header, Modal, GitCorner }

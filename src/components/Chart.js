@@ -7,25 +7,9 @@ import { alarm } from "../assets"
 import { Select } from "./Inputs/select"
 import { Button, ButtonDownload } from "./Inputs/button"
 
-const Wrapper = styled.div`
-  grid-area: chart;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-content: center;
-  justify-content: flex-start;
-
-  > canvas {
-    margin-top: 10px;
-    background: #f6f6f6;
-    border-radius: 4px;
-    box-shadow: 0 0 2px rgba(black, 0.5);
-  }
-`
+const Fragment = React.Fragment
 
 const Controls = styled.div`
-  grid-area: controls;
-  padding: 0.5rem 0;
   display: flex;
   justify-content: flex-start;
 `
@@ -40,6 +24,13 @@ const Alarm = styled.div`
     height: 20px;
     margin-right: 10px;
   }
+`
+
+const Canvas = styled.canvas`
+  margin-top: 10px;
+  background: #f6f6f6;
+  border-radius: 4px;
+  box-shadow: 0 0 2px rgba(black, 0.5);
 `
 
 const Information = styled.div`
@@ -58,14 +49,6 @@ const Information = styled.div`
       display: inline-flex;
       align-items: center;
     }
-  }
-`
-
-const Description = styled.div`
-  a {
-    color: black;
-    font-weight: 700;
-    text-decoration: none;
   }
 `
 
@@ -177,7 +160,7 @@ class ChartComponent extends Component {
     const { toggleModal, plotChart } = this.props
 
     return (
-      <Wrapper>
+      <Fragment>
         <Controls>
           <Button handleClick={toggleModal}>Import Data</Button>
 
@@ -195,9 +178,9 @@ class ChartComponent extends Component {
           )}
         </Controls>
 
-        <canvas ref={element => (this.element = element)} />
+        <Canvas innerRef={element => (this.element = element)} />
 
-        {displayInfo ? (
+        {displayInfo && (
           <Information>
             <div>
               <h1>{title}</h1>
@@ -214,35 +197,19 @@ class ChartComponent extends Component {
 
             <div>{description[title]}</div>
           </Information>
-        ) : (
-          <Description>
-            <h2>What is this!?</h2>
-            <p>
-              The control chart is one of the seven basic tools of quality control. Typically control charts are used
-              for time-series data, though they can be used for data that have logical comparability (i.e. you want to
-              compare samples that were taken all at the same time, or the performance of different individuals);
-              however the type of chart used to do this requires consideration.<a href="https://en.wikipedia.org/wiki/Control_chart">
-                - Wikipedia
-              </a>
-            </p>
-          </Description>
         )}
-      </Wrapper>
+      </Fragment>
     )
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    plot: state.plot
-  }
-}
+const state = state => ({
+  plot: state.plot
+})
 
-const mapDispatchToProps = dispatch => {
-  return {
-    toggleModal: () => dispatch(toggle_modal()),
-    plotChart: e => dispatch(plot_Chart(e))
-  }
-}
+const actions = dispatch => ({
+  toggleModal: () => dispatch(toggle_modal()),
+  plotChart: e => dispatch(plot_Chart(e))
+})
 
-export default connect(mapStateToProps, mapDispatchToProps)(ChartComponent)
+export default connect(state, actions)(ChartComponent)

@@ -34,7 +34,10 @@
   *,
   *:before,
   *:after {
+    margin: 0;
+    padding: 0;
     box-sizing: border-box;
+    backface-visibility: hidden;
   }
 
   html,
@@ -43,19 +46,9 @@
     padding: 0;
     font-family: "Space Mono", monospace, sans-serif;
     font-variant-ligatures: no-common-ligatures;
-    font-size: 1em;
+    font-size: 16px;
     font-weight: 400;
-  }
-
-  #root {
-    display: grid;
-    grid-gap: 30px;
-    grid-template-columns: 1fr minmax(800px, 1200px) 1fr;
-    grid-template-rows: 55px auto;
-    grid-template-areas: ".      header       ." ".      chart        .";
-    width: 100vw;
-    height: 100vh;
-    background-color: #ffffff;
+    overflow-x: hidden;
   }
 </style>
 

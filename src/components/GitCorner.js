@@ -1,20 +1,5 @@
 import React from "react"
-import styled, { keyframes } from "styled-components"
-
-const wave = keyframes`
-  0%,
-  100% {
-    transform: rotate(0);
-  }
-  20%,
-  60% {
-    transform: rotate(-25deg);
-  }
-  40%,
-  80% {
-    transform: rotate(10deg);
-  }
-`
+import styled from "styled-components"
 
 const Wrapper = styled.a`
   position: fixed;
@@ -24,7 +9,7 @@ const Wrapper = styled.a`
     transform-origin: 130px 106px;
   }
   &:hover .octo-arm {
-    animation: ${wave} 560ms ease-in-out;
+    animation: wave 560ms ease-in-out;
   }
 
   @media (max-width: 500px) {
@@ -32,7 +17,7 @@ const Wrapper = styled.a`
       animation: none;
     }
     .octo-arm {
-      animation: ${wave} 560ms ease-in-out;
+      animation: wave 560ms ease-in-out;
     }
   }
 `

@@ -52,27 +52,16 @@
     "whatwg-fetch": "2.0.3"
   },
   "scripts": {
-    "build-css": "node-sass-chokidar src/ -o src/",
-    "watch-css": "npm run build-css && node-sass-chokidar src/ -o src/ --watch --recursive",
-    "start-js": "node scripts/start.js",
-    "start": "npm-run-all -p watch-css start-js",
-    "build-js": "node scripts/build",
-    "build": "npm-run-all build-css build-js",
+    "start": "node scripts/start.js",
+    "build": "node scripts/build.js",
     "test": "node scripts/test.js --env=jsdom",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build"
   },
   "jest": {
-    "collectCoverageFrom": [
-      "src/**/*.{js,jsx,mjs}"
-    ],
-    "setupFiles": [
-      "<rootDir>/config/polyfills.js"
-    ],
-    "testMatch": [
-      "<rootDir>/src/**/__tests__/**/*.{js,jsx,mjs}",
-      "<rootDir>/src/**/?(*.)(spec|test).{js,jsx,mjs}"
-    ],
+    "collectCoverageFrom": ["src/**/*.{js,jsx,mjs}"],
+    "setupFiles": ["<rootDir>/config/polyfills.js"],
+    "testMatch": ["<rootDir>/src/**/__tests__/**/*.{js,jsx,mjs}", "<rootDir>/src/**/?(*.)(spec|test).{js,jsx,mjs}"],
     "testEnvironment": "node",
     "testURL": "http://localhost",
     "transform": {
@@ -80,26 +69,14 @@
       "^.+\\.css$": "<rootDir>/config/jest/cssTransform.js",
       "^(?!.*\\.(js|jsx|mjs|css|json)$)": "<rootDir>/config/jest/fileTransform.js"
     },
-    "transformIgnorePatterns": [
-      "[/\\\\]node_modules[/\\\\].+\\.(js|jsx|mjs)$"
-    ],
+    "transformIgnorePatterns": ["[/\\\\]node_modules[/\\\\].+\\.(js|jsx|mjs)$"],
     "moduleNameMapper": {
       "^react-native$": "react-native-web"
     },
-    "moduleFileExtensions": [
-      "web.js",
-      "mjs",
-      "js",
-      "json",
-      "web.jsx",
-      "jsx",
-      "node"
-    ]
+    "moduleFileExtensions": ["web.js", "mjs", "js", "json", "web.jsx", "jsx", "node"]
   },
   "babel": {
-    "presets": [
-      "react-app"
-    ]
+    "presets": ["react-app"]
   },
   "eslintConfig": {
     "extends": "react-app"
