@@ -1,5 +1,4 @@
-import React from "react"
-import ReactDOM from "react-dom"
+import { h, render } from "preact"
 import { Provider } from "react-redux"
 import { createStore, applyMiddleware } from "redux"
 import thunk from "redux-thunk"
@@ -12,15 +11,25 @@ import { Header, Chart, Modal } from "./components"
 
 const store = createStore(root, applyMiddleware(thunk))
 
-ReactDOM.render(
+const App = () => (
+  <div>
+    <Header />
+    <Modal />
+    <Chart />
+  </div>
+)
+
+render(
   <Provider store={store}>
-    <React.Fragment>
-      <Header />
-      <Modal />
-      <Chart />
-    </React.Fragment>
+    <App />
   </Provider>,
-  document.getElementById("root")
+  document.body
 )
 
 registerServiceWorker()
+
+if (module.hot) {
+  require("preact/devtools")
+} else {
+  console.log("hello there...")
+}

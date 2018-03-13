@@ -1,4 +1,4 @@
-import React, { Component } from "react"
+import { h, Component } from "preact"
 import { connect } from "react-redux"
 import Chart from "chart.js"
 import { toggle_modal, plot_Chart } from "../../store/actions"

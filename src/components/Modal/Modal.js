@@ -1,4 +1,4 @@
-import React from "react"
+import { h } from "preact"
 import { connect } from "react-redux"
 import {
   toggle_modal,

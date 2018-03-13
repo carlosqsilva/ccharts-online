@@ -1,4 +1,4 @@
-import React from "react"
+import { h } from "preact"
 
 export const DataTable = ({ columns, data }) => {
   if (data) {

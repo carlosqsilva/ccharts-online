@@ -1,4 +1,4 @@
-import React from "react"
+import { h } from "preact"
 import file from "./csv.svg"
 
 export const Button = ({ handleClick, children, ...props }) => (
