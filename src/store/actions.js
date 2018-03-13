@@ -1,49 +1,40 @@
-import {
-  TOGGLE_MODAL,
-  DATA_LOADED,
-  UPDATE_HEADER,
-  UPDATE_DELIMITER,
-  UPDATE_DECIMAL,
-  SET_CHART,
-  DISPLAY_ALARM
-} from "./constants"
-
 import { xbar_rbar, xbar_sbar, rbar, sbar, ewma, cusum } from "./ccharts"
+import * as type from "./constants"
 
 export const toggle_modal = () => ({
-  type: TOGGLE_MODAL
+  type: type.TOGGLE_MODAL
 })
 
 const dataLoaded = (data, columns, dataString) => ({
-  type: DATA_LOADED,
+  type: type.DATA_LOADED,
   data,
   columns,
   dataString
 })
 
 const updateHeader = (data, columns, header) => ({
-  type: UPDATE_HEADER,
+  type: type.UPDATE_HEADER,
   data,
   columns,
   header
 })
 
 const updateDelimiter = (data, columns, delimiter) => ({
-  type: UPDATE_DELIMITER,
+  type: type.UPDATE_DELIMITER,
   data,
   columns,
   delimiter
 })
 
 const updateDecimal = (data, columns, decimal) => ({
-  type: UPDATE_DECIMAL,
+  type: type.UPDATE_DECIMAL,
   data,
   columns,
   decimal
 })
 
 const setChart = (datasets, labels, title, ticks) => ({
-  type: SET_CHART,
+  type: type.SET_CHART,
   datasets,
   labels,
   title,
@@ -51,7 +42,7 @@ const setChart = (datasets, labels, title, ticks) => ({
 })
 
 const displayAlarm = display => ({
-  type: DISPLAY_ALARM,
+  type: type.DISPLAY_ALARM,
   display
 })
 
@@ -69,7 +60,9 @@ const processCsv = (dataString, sep, decimal, header) => {
     columns = columns.concat(data[0].map((_, i) => `X${i}`))
   }
 
-  data = data.map(row => row.map(cell => Number(cell.trim().replace(decimal, "."))))
+  data = data.map(row =>
+    row.map(cell => Number(cell.trim().replace(decimal, ".")))
+  )
 
   return { data, columns }
 }
@@ -119,7 +112,9 @@ export const set_Header = event => (dispatch, getState) => {
 }
 
 export const plot_Chart = event => (dispatch, getState) => {
-  const chart = [null, xbar_rbar, xbar_sbar, rbar, sbar, ewma, cusum][event.target.selectedIndex]
+  const chart = [null, xbar_rbar, xbar_sbar, rbar, sbar, ewma, cusum][
+    event.target.selectedIndex
+  ]
 
   const { data } = getState().data
 
@@ -136,7 +131,8 @@ export const plot_Chart = event => (dispatch, getState) => {
 }
 
 export const load_sample = () => dispatch => {
-  const url = "https://raw.githubusercontent.com/carlosqsilva/ccharts-online/master/arquivo.csv"
+  const url =
+    "https://raw.githubusercontent.com/carlosqsilva/ccharts-online/master/arquivo.csv"
   fetch(url)
     .then(data => data.text())
     .then(data => {

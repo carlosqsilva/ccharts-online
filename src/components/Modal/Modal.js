@@ -1,81 +1,85 @@
 import React from "react"
-import styled from "styled-components"
 import { connect } from "react-redux"
-import { toggle_modal, loadData, set_Delimiter, set_Decimal, set_Header, load_sample } from "../../store/actions"
-import { Select } from "../Inputs/select"
-import { CheckBox } from "../Inputs/checkBox"
-import { FileInput } from "../Inputs/fileInput"
-import { Button } from "../Inputs/button"
+import {
+  toggle_modal,
+  loadData,
+  set_Delimiter,
+  set_Decimal,
+  set_Header,
+  load_sample
+} from "../../store/actions"
+import { Select, CheckBox, FileInput, Button } from "../Inputs"
 import { DataTable } from "./table"
-import { Close } from "./closeModal"
 
-const Wrapper = styled.div`
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  z-index: 50;
-  background-color: rgba(0, 0, 0, 0.85);
-  padding: 50px;
-  display: grid;
-  grid-gap: 10px;
-  grid-template-columns: 1fr minmax(800px, 1200px) 1fr;
-  grid-template-rows: 60px 1fr;
-  grid-template-areas:
-    "   .   options    ."
-    "   .   datagrid   .";
-  animation: fadeIn 500ms ease;
-`
+const Modal = ({
+  toggleModal,
+  readFile,
+  loadSample,
+  setHeader,
+  setDelimiter,
+  setDecimal,
+  closed,
+  columns,
+  data
+}) => {
+  const delimiter = ["Delimiter", "Comma", "empty space", "Colon", "Semicolon"]
+  const decimal = ["Decimal", 'Option "."', 'Option ","']
 
-const Container = styled.div`
-  grid-area: options;
-  position: relative;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-`
+  return (
+    <div className={`modal ${!closed && "is-active"}`}>
+      <div className="modal-background" />
+      <div className="modal-card">
+        <header className="modal-card-head">
+          <p className="modal-card-title">Import your data (.csv or .txt)</p>
+          <button className="delete" onClick={toggleModal} aria-label="close" />
+        </header>
+        <section className="modal-card-body">
+          <div className="level is-mobile">
+            <div className="level-left">
+              <div className="level-item">
+                <FileInput handleChange={readFile}>Choose a file</FileInput>
+              </div>
 
-const Modal = props => {
-  const { toggleModal, readFile, loadSample, setHeader, setDelimiter, setDecimal, modal } = props
+              <div className="level-item">
+                <Select options={delimiter} handleChange={setDelimiter} />
+              </div>
 
-  if (!modal.closed) {
-    return (
-      <Wrapper>
-        <Container>
-          <FileInput handleChange={readFile}>Choose a file</FileInput>
+              <div className="level-item">
+                <Select options={decimal} handleChange={setDecimal} />
+              </div>
 
-          <Select options={["Delimiter", "Comma", "empty space", "Colon", "Semicolon"]} handleChange={setDelimiter} />
+              <div className="level-item">
+                <CheckBox handleClick={setHeader}>Has header</CheckBox>
+              </div>
 
-          <Select options={["Decimal", 'Option "."', 'Option ","']} handleChange={setDecimal} />
+              <div className="level-item">
+                <Button handleClick={loadSample} className="is-dark">
+                  Import Example
+                </Button>
+              </div>
+            </div>
+          </div>
 
-          <CheckBox handleClick={setHeader}>Has header</CheckBox>
-
-          <Button handleClick={loadSample} style={{ backgroundColor: "#393E46", color: "#FBFBFB" }}>
-            Import Example
-          </Button>
-
-          <Close handleClick={toggleModal} />
-        </Container>
-
-        <DataTable modal={modal} />
-      </Wrapper>
-    )
-  }
-  return null
+          <DataTable data={data} columns={columns} />
+        </section>
+      </div>
+    </div>
+  )
 }
 
-const state = state => ({
-  modal: state.data
+const state = ({ data }) => ({
+  closed: data.closed,
+  columns: data.columns,
+  data: data.data
 })
 
-const actions = dispatch => ({
-  toggleModal: () => dispatch(toggle_modal()),
-  readFile: e => dispatch(loadData(e)),
-  setHeader: e => dispatch(set_Header(e)),
-  setDelimiter: e => dispatch(set_Delimiter(e)),
-  setDecimal: e => dispatch(set_Decimal(e)),
-  loadSample: () => dispatch(load_sample())
-})
+const actions = {
+  toggleModal: toggle_modal,
+  readFile: loadData,
+  setHeader: set_Header,
+  setDelimiter: set_Delimiter,
+  setDecimal: set_Decimal,
+  loadSample: load_sample
+}
 
 export default connect(state, actions)(Modal)

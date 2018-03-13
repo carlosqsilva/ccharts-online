@@ -1,25 +1,24 @@
 import React from "react"
 import ReactDOM from "react-dom"
 import { Provider } from "react-redux"
-import { createStore, combineReducers, applyMiddleware } from "redux"
+import { createStore, applyMiddleware } from "redux"
 import thunk from "redux-thunk"
 
-import data from "./store/dataReducer"
-import plot from "./store/plotReducer"
-import App from "./App"
+import root from "./store"
 import registerServiceWorker from "./registerServiceWorker"
 
-const store = createStore(
-  combineReducers({
-    data,
-    plot
-  }),
-  applyMiddleware(thunk)
-)
+import "./index.css"
+import { Header, Chart, Modal } from "./components"
+
+const store = createStore(root, applyMiddleware(thunk))
 
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <React.Fragment>
+      <Header />
+      <Modal />
+      <Chart />
+    </React.Fragment>
   </Provider>,
   document.getElementById("root")
 )

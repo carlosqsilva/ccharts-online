@@ -1,82 +1,60 @@
 import React from "react"
-import styled from "styled-components"
 import logo from "./logo.svg"
-import heart from "./heart.svg"
 
-const Wrapper = styled.header`
-  display: grid;
-  grid-template-columns: 1fr minmax(300px, 1000px) 1fr;
-  min-height: 55px;
-  margin-bottom: 30px;
-`
-
-const Container = styled.div`
-  grid-column: 2;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-`
-
-const Brand = styled.div`
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 1.6rem;
-  color: #2c2e3e;
-
-  > span {
-    opacity: 0;
-    transition: all 500ms ease;
-    &:last-child {
-      opacity: 1;
-      display: inline-block;
-      transform: translateX(-94px);
-    }
-  }
-
-  &:hover {
-    > span {
-      opacity: 1;
-      &:last-child {
-        transform: translateX(15px);
-      }
-    }
-  }
-`
-
-const Author = styled.a`
-  align-self: center;
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-  text-decoration: none;
-  color: black;
-  font-size: 0.9rem;
-
-  > img {
-    width: 10px;
-    height: 10px;
-    margin: 0 5px;
-    animation: beat 1.2s infinite alternate;
-  }
-`
+const NavBar = () => (
+  <nav className="navbar">
+    <div className="container">
+      <div className="level is-mobile">
+        <div className="brand">
+          <img src={logo} alt="controls chart online" />
+          C<span>ontrol</span>
+          <span>
+            Chart online<a
+              className="author"
+              href="https://carloseng.com"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              by Carlos Silva
+            </a>
+          </span>
+        </div>
+        <a
+          className="button is-rounded is-success"
+          href="https://github.com/carlosqsilva/ccharts-online"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Github
+        </a>
+      </div>
+    </div>
+  </nav>
+)
 
 const Header = () => {
   return (
-    <Wrapper>
-      <Container>
-        <Brand>
-          <img style={{ width: 50, height: 50, marginRight: 10 }} src={logo} alt="controls chart online" />
-          C<span>ontrol</span>
-          <span>Chart online</span>
-        </Brand>
-
-        <Author href="https://carloseng.com" target="_blank" rel="noopener noreferrer">
-          Made with <img src={heart} alt="love" /> by Carlos Silva
-        </Author>
-      </Container>
-    </Wrapper>
+    <section className="hero is-dark">
+      <div className="hero-head">
+        <NavBar />
+      </div>
+      <div className="hero-body">
+        <div className="container has-text-centered">
+          <h1 className="title">What is this!?</h1>
+          <h2 className="subtitle">
+            The control chart is one of the seven basic tools of quality
+            control. Typically control charts are used for time-series data,
+            though they can be used for data that have logical comparability
+            (i.e. you want to compare samples that were taken all at the same
+            time, or the performance of different individuals); however the type
+            of chart used to do this requires consideration.{" "}
+            <a href="https://en.wikipedia.org/wiki/Control_chart">
+              - Wikipedia
+            </a>
+          </h2>
+        </div>
+      </div>
+    </section>
   )
 }
 
