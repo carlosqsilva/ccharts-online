@@ -1,32 +1,25 @@
 import { h } from "preact"
+import { Link } from "../Utils"
 import logo from "./logo.svg"
 
 const NavBar = () => (
-  <nav className="navbar">
-    <div className="container">
-      <div className="level is-mobile">
-        <div className="brand">
-          <img src={logo} alt="controls chart online" />
-          C<span>ontrol</span>
-          <span>
-            Chart online<a
-              className="author"
-              href="https://carloseng.com"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              by Carlos Silva
-            </a>
-          </span>
+  <nav class="navbar">
+    <div class="container">
+      <div class="navbar-brand">
+        <div class="navbar-item">
+          <div class="brand">
+            <img class="brand__logo" src={logo} alt="logo" />
+            <h1 class="brand__title has-text-white">SPC online</h1>
+          </div>
         </div>
-        <a
-          className="button is-rounded is-success"
+      </div>
+      <div class="navbar-end">
+        <Link
+          class="navbar-item"
           href="https://github.com/carlosqsilva/ccharts-online"
-          target="_blank"
-          rel="noopener noreferrer"
         >
           Github
-        </a>
+        </Link>
       </div>
     </div>
   </nav>
@@ -39,7 +32,7 @@ const Header = () => (
     </div>
     <div className="hero-body">
       <div className="container has-text-centered">
-        <h1 className="title">What is this!?</h1>
+        <h1 className="title is-spaced">What is this!?</h1>
         <h2 className="subtitle">
           The control chart is one of the seven basic tools of quality control.
           Typically control charts are used for time-series data, though they
@@ -47,7 +40,9 @@ const Header = () => (
           compare samples that were taken all at the same time, or the
           performance of different individuals); however the type of chart used
           to do this requires consideration.{" "}
-          <a href="https://en.wikipedia.org/wiki/Control_chart">- Wikipedia</a>
+          <Link href="https://en.wikipedia.org/wiki/Control_chart">
+            - Wikipedia
+          </Link>
         </h2>
       </div>
     </div>

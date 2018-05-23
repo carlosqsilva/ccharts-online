@@ -53,46 +53,14 @@ const dataReducer = (state = initialState, action) => {
 
 const plotState = {
   labels: [1, 2, 3, 4],
-  datasets: [
-    {
-      data: [7.5, 12.5, 7.5, 10],
-      lineTension: 0,
-      borderColor: "#003459",
-      pointRadius: 3,
-      pointBorderWidth: 0,
-      pointBackgroundColor: ["#f54d42", "#f54d42", "#f54d42", "#259f6c"],
-      fill: false
-    },
-    {
-      data: [10, 10, 10, 10],
-      lineTension: 0,
-      pointRadius: 0,
-      fill: false
-    },
-    {
-      data: [12, 12, 12, 12],
-      lineTension: 0,
-      pointRadius: 0,
-      borderColor: "#ee2b47",
-      borderWidth: 2,
-      fill: 1
-    },
-    {
-      data: [8, 8, 8, 8],
-      lineTension: 0,
-      pointRadius: 0,
-      borderColor: "#ee2b47",
-      borderWidth: 2,
-      fill: 1
-    }
-  ],
+  datasets: [],
   title: "",
   ticks: {
     ucl: 12,
     center: 10,
     lcl: 8
   },
-  displayInfo: false,
+  displayChart: false,
   displayAlarm: false
 }
 
@@ -105,7 +73,7 @@ const plotReducer = (state = plotState, action) => {
         datasets: action.datasets,
         title: action.title,
         ticks: action.ticks,
-        displayInfo: true,
+        displayChart: true,
         displayAlarm: false
       }
     case type.DISPLAY_ALARM:

@@ -168,7 +168,7 @@ module.exports = {
           // use the "style" loader inside the async code so CSS from them won't be
           // in the main CSS file.
           {
-            test: /\.css$/,
+            test: /\.scss$/,
             loader: ExtractTextPlugin.extract(
               Object.assign(
                 {
@@ -201,6 +201,9 @@ module.exports = {
                           })
                         ]
                       }
+                    },
+                    {
+                      loader: "sass-loader"
                     }
                   ]
                 },
@@ -241,7 +244,7 @@ module.exports = {
       minChunks: Infinity
     }),
 
-    new BundleAnalyzerPlugin(),
+    // new BundleAnalyzerPlugin(),
     // Makes some environment variables available in index.html.
     // The public URL is available as %PUBLIC_URL% in index.html, e.g.:
     // <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">

@@ -7,79 +7,59 @@ import { Button, Select } from "../Inputs"
 import { options, description } from "./options"
 
 class ChartComponent extends Component {
+  options = [
+    "Charts",
+    "Xbar_Rbar",
+    "Xbar_Sbar",
+    "Rbar",
+    "Sbar",
+    "Ewma",
+    "Cusum"
+  ]
+
   componentDidMount() {
     this.render_chart()
-  }
-
-  componentWillUnmount() {
-    this.chart_instance.destroy()
   }
 
   componentDidUpdate() {
     this.chart_instance.destroy()
     this.render_chart()
-    this.container.scrollIntoView()
-  }
-
-  shouldComponentUpdate(nextProps) {
-    const { labels, datasets } = this.props.plot
-
-    if (
-      labels !== nextProps.plot.labels ||
-      datasets !== nextProps.plot.datasets ||
-      nextProps.plot.displayAlarm
-    ) {
-      return true
-    }
-    return false
   }
 
   render_chart() {
-    const node = this.element
     const { plot } = this.props
-
-    this.chart_instance = new Chart(node, {
+    this.chart_instance = new Chart(this.chart, {
       ...options(plot)
     })
   }
 
   downloadChart = ({ target }) => {
-    target.href = this.element.toDataURL()
+    target.href = this.chart.toDataURL()
     target.download = "Chart.png"
   }
 
-  render() {
-    const { displayInfo, displayAlarm, title } = this.props.plot
-    const { toggleModal, plotChart } = this.props
-    const options = [
-      "Charts",
-      "Xbar_Rbar",
-      "Xbar_Sbar",
-      "Rbar",
-      "Sbar",
-      "Ewma",
-      "Cusum"
-    ]
+  render({ toggleModal, plotChart, plot }) {
+    const { displayChart, displayAlarm, title } = plot
     return (
-      <section className="section" ref={e => (this.container = e)}>
-        <div className="container">
-          <div className="level is-mobile">
-            <div className="level-left">
-              <div className="level-item">
+      <section class="section">
+        <div class="container">
+          <div class="level is-mobile">
+            <div class="level-left">
+              <div class="level-item">
                 <Button handleClick={toggleModal}>Import Data</Button>
               </div>
-              <div className="level-item">
-                <Select options={options} handleChange={plotChart} />
+              <div class="level-item">
+                <Select options={this.options} handleChange={plotChart} />
               </div>
 
-              {displayInfo && (
-                <a className="button" onClick={this.downloadChart}>
+              {displayChart && (
+                <a class="button" onClick={this.downloadChart}>
                   Download
                 </a>
               )}
 
               {displayAlarm && (
-                <div className="alarm">
+                <div class="alarm">
                   <img src={alarm} alt="Alarm" /> You firts need to import a
                   dataset.
                 </div>
@@ -87,11 +67,9 @@ class ChartComponent extends Component {
             </div>
           </div>
 
-          <canvas className="canvas" ref={e => (this.element = e)} />
+          <canvas class="canvas" ref={e => (this.chart = e)} />
 
-          {displayInfo && (
-            <div className="information">{description[title]}</div>
-          )}
+          {displayChart && <div class="information">{description[title]}</div>}
         </div>
       </section>
     )

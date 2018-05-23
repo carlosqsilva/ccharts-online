@@ -6,8 +6,8 @@ import thunk from "redux-thunk"
 import root from "./store"
 import registerServiceWorker from "./registerServiceWorker"
 
-import "./index.css"
-import { Header, Chart, Modal } from "./components"
+import "./index.scss"
+import { Header, Chart, Modal, Footer } from "./components"
 
 const store = createStore(root, applyMiddleware(thunk))
 
@@ -16,6 +16,7 @@ const App = () => (
     <Header />
     <Modal />
     <Chart />
+    <Footer />
   </div>
 )
 
@@ -27,9 +28,3 @@ render(
 )
 
 registerServiceWorker()
-
-if (module.hot) {
-  require("preact/devtools")
-} else {
-  console.log("hello there...")
-}

@@ -26,34 +26,34 @@ const Modal = ({
   const decimal = ["Decimal", 'Option "."', 'Option ","']
 
   return (
-    <div className={`modal ${!closed && "is-active"}`}>
-      <div className="modal-background" />
-      <div className="modal-card">
-        <header className="modal-card-head">
-          <p className="modal-card-title">Import your data (.csv or .txt)</p>
-          <button className="delete" onClick={toggleModal} aria-label="close" />
+    <div class={`modal ${!closed && "is-active"}`}>
+      <div class="modal-background" />
+      <div class="modal-card">
+        <header class="modal-card-head">
+          <p class="modal-card-title">Import your data (.csv or .txt)</p>
+          <button class="delete" onClick={toggleModal} aria-label="close" />
         </header>
-        <section className="modal-card-body">
-          <div className="level is-mobile">
-            <div className="level-left">
-              <div className="level-item">
+        <section class="modal-card-body">
+          <div class="level is-mobile">
+            <div class="level-left">
+              <div class="level-item">
                 <FileInput handleChange={readFile}>Choose a file</FileInput>
               </div>
 
-              <div className="level-item">
+              <div class="level-item">
                 <Select options={delimiter} handleChange={setDelimiter} />
               </div>
 
-              <div className="level-item">
+              <div class="level-item">
                 <Select options={decimal} handleChange={setDecimal} />
               </div>
 
-              <div className="level-item">
+              <div class="level-item">
                 <CheckBox handleClick={setHeader}>Has header</CheckBox>
               </div>
 
-              <div className="level-item">
-                <Button handleClick={loadSample} className="is-dark">
+              <div class="level-item">
+                <Button handleClick={loadSample} class="is-dark">
                   Import Example
                 </Button>
               </div>
