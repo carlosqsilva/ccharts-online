@@ -3,23 +3,30 @@ import { Link } from "../Utils"
 import logo from "./logo.svg"
 
 const NavBar = () => (
-  <nav class="navbar">
+  <nav class="main-nav navbar">
     <div class="container">
-      <div class="navbar-brand">
-        <div class="navbar-item">
+      <div class="navbar-start">
+        <a
+          class="navbar-item"
+          href="https://github.com/carlosqsilva/ccharts-online"
+        >
           <div class="brand">
             <img class="brand__logo" src={logo} alt="logo" />
             <h1 class="brand__title has-text-white">SPC online</h1>
           </div>
-        </div>
+        </a>
       </div>
       <div class="navbar-end">
-        <Link
-          class="navbar-item"
-          href="https://github.com/carlosqsilva/ccharts-online"
-        >
-          Github
-        </Link>
+        <a class="navbar-item">
+          <iframe
+            src="https://ghbtns.com/github-btn.html?user=carlosqsilva&repo=ccharts-online&type=star&count=true&size=large"
+            frameborder="0"
+            scrolling="0"
+            width="115px"
+            height="30px"
+            title="github stars"
+          />
+        </a>
       </div>
     </div>
   </nav>

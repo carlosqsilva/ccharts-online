@@ -1,6 +1,7 @@
 $modal-content-width: 970px;
-
+@import "../node_modules/bulmaswatch/materia/_variables";
 @import "../node_modules/bulma/bulma.sass";
+@import "../node_modules/bulmaswatch/materia/_overrides";
 
 .brand {
   display: flex;
@@ -20,16 +21,8 @@ $modal-content-width: 970px;
   border-radius: 3px;
 }
 
-.alarm {
-  display: inline-flex;
-  align-items: center;
-  animation: fadetoright 300ms ease;
-
-  > img {
-    width: 20px;
-    height: 20px;
-    margin-right: 10px;
-  }
+.ml10 {
+  margin-left: 10px;
 }
 
 .information {

@@ -3,8 +3,11 @@
     [
       "env",
       {
+        "modules": false,
+        "useBuiltIns": false,
+        "loose": true,
         "targets": {
-          "browsers": ["since 2017"]
+          "browsers": ["since 2018"]
         }
       }
     ]
@@ -16,6 +19,7 @@
         "pragma": "h"
       }
     ],
+    ["syntax-dynamic-import"],
     ["transform-class-properties"],
     [
       "transform-object-rest-spread",

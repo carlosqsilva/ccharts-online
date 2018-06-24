@@ -14,7 +14,10 @@ class ChartComponent extends Component {
     "Rbar",
     "Sbar",
     "Ewma",
-    "Cusum"
+    "Cusum",
+    "P",
+    "NP",
+    "C"
   ]
 
   componentDidMount() {
@@ -34,34 +37,36 @@ class ChartComponent extends Component {
   }
 
   downloadChart = ({ target }) => {
+    if (!this.props.plot.chart) return null
     target.href = this.chart.toDataURL()
     target.download = "Chart.png"
   }
 
   render({ toggleModal, plotChart, plot }) {
-    const { displayChart, displayAlarm, title } = plot
+    const { chart, error, errorMessage, title } = plot
     return (
       <section class="section">
         <div class="container">
           <div class="level is-mobile">
             <div class="level-left">
               <div class="level-item">
-                <Button handleClick={toggleModal}>Import Data</Button>
+                <Button action={toggleModal}>Import Data</Button>
               </div>
+
               <div class="level-item">
                 <Select options={this.options} handleChange={plotChart} />
               </div>
 
-              {displayChart && (
-                <a class="button" onClick={this.downloadChart}>
+              <div class="level-item">
+                <Button action={this.downloadChart} disabled={!chart}>
                   Download
-                </a>
-              )}
+                </Button>
+              </div>
 
-              {displayAlarm && (
-                <div class="alarm">
-                  <img src={alarm} alt="Alarm" /> You firts need to import a
-                  dataset.
+              {error && (
+                <div class="level-item">
+                  <img class="icon" src={alarm} alt="Alarm" />
+                  <p class="ml10">{errorMessage}</p>
                 </div>
               )}
             </div>
@@ -69,15 +74,15 @@ class ChartComponent extends Component {
 
           <canvas class="canvas" ref={e => (this.chart = e)} />
 
-          {displayChart && <div class="information">{description[title]}</div>}
+          {chart && <div class="information">{description[title]}</div>}
         </div>
       </section>
     )
   }
 }
 
-const state = state => ({
-  plot: state.plot
+const state = ({ plot }) => ({
+  plot
 })
 
 const actions = {
@@ -85,4 +90,7 @@ const actions = {
   plotChart: plot_Chart
 }
 
-export default connect(state, actions)(ChartComponent)
+export default connect(
+  state,
+  actions
+)(ChartComponent)

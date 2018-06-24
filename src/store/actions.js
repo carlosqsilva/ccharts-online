@@ -1,4 +1,4 @@
-import { xbar_rbar, xbar_sbar, rbar, sbar, ewma, cusum } from "./ccharts"
+import charts from "./charts"
 import * as type from "./constants"
 
 export const toggle_modal = () => ({
@@ -41,12 +41,12 @@ const setChart = (datasets, labels, title, ticks) => ({
   ticks
 })
 
-const displayAlarm = display => ({
-  type: type.DISPLAY_ALARM,
-  display
+const showMessage = message => ({
+  type: type.SHOW_MESSAGE,
+  message
 })
 
-const processCsv = (dataString, sep, decimal, header) => {
+const processCSV = async (dataString, sep, decimal, header) => {
   let columns = ["__"]
   let data = dataString
     .trim()
@@ -77,66 +77,84 @@ const readFile = file => {
   })
 }
 
-export const loadData = event => (dispatch, getState) => {
+export const loadData = event => async (dispatch, getState) => {
   let file = event.target.files[0]
-
   const { delimiter, decimal, header } = getState().data
-
-  readFile(file).then(dataString => {
-    let result = processCsv(dataString, delimiter, decimal, header)
-    dispatch(dataLoaded(result.data, result.columns, dataString))
-  })
+  const dataString = await readFile(file)
+  const { data, columns } = await processCSV(
+    dataString,
+    delimiter,
+    decimal,
+    header
+  )
+  dispatch(dataLoaded(data, columns, dataString))
 }
 
-export const set_Delimiter = event => (dispatch, getState) => {
+export const set_Delimiter = event => async (dispatch, getState) => {
   let delimiter = [",", ",", " ", ":", ";"][event.target.selectedIndex]
   const { dataString, decimal, header } = getState().data
-
-  let result = processCsv(dataString, delimiter, decimal, header)
-  dispatch(updateDelimiter(result.data, result.columns, delimiter))
+  const { data, columns } = await processCSV(
+    dataString,
+    delimiter,
+    decimal,
+    header
+  )
+  dispatch(updateDelimiter(data, columns, delimiter))
 }
 
-export const set_Decimal = event => (dispatch, getState) => {
+export const set_Decimal = event => async (dispatch, getState) => {
   let decimal = [".", ".", ","][event.target.selectedIndex]
   const { dataString, delimiter, header } = getState().data
-
-  let result = processCsv(dataString, delimiter, decimal, header)
-  dispatch(updateDecimal(result.data, result.columns, decimal))
+  const { data, columns } = await processCSV(
+    dataString,
+    delimiter,
+    decimal,
+    header
+  )
+  dispatch(updateDecimal(data, columns, decimal))
 }
 
-export const set_Header = event => (dispatch, getState) => {
+export const set_Header = event => async (dispatch, getState) => {
   const { dataString, delimiter, decimal, header } = getState().data
 
-  let result = processCsv(dataString, delimiter, decimal, !header)
-  dispatch(updateHeader(result.data, result.columns, !header))
+  const { data, columns } = await processCSV(
+    dataString,
+    delimiter,
+    decimal,
+    !header
+  )
+  dispatch(updateHeader(data, columns, !header))
 }
 
-export const plot_Chart = event => (dispatch, getState) => {
-  const chart = [null, xbar_rbar, xbar_sbar, rbar, sbar, ewma, cusum][
-    event.target.selectedIndex
-  ]
-
+export const plot_Chart = event => async (dispatch, getState) => {
+  const chart = charts[event.target.value] || null
   const { data } = getState().data
 
-  if (!data) {
-    dispatch(displayAlarm(true))
-  } else {
+  if (!data) dispatch(showMessage("You firts need to import a dataset."))
+  else {
     if (chart) {
       const labels = data.map((_, i) => i + 1)
-
-      const { datasets, title, ticks } = chart(data)
-      dispatch(setChart(datasets, labels, title, ticks))
+      try {
+        const { datasets, title, ticks } = await chart(data)
+        dispatch(setChart(datasets, labels, title, ticks))
+      } catch (err) {
+        dispatch(showMessage(err.message))
+      }
     }
   }
 }
 
-export const load_sample = () => dispatch => {
-  const url =
-    "https://raw.githubusercontent.com/carlosqsilva/ccharts-online/master/arquivo.csv"
-  fetch(url)
-    .then(data => data.text())
-    .then(data => {
-      let result = processCsv(data, ",", ".", true)
-      dispatch(dataLoaded(result.data, result.columns, data))
-    })
+export const load_sample = event => async dispatch => {
+  let value = event.target.value
+  let text
+
+  if (value === "P") text = await import("./example/p")
+  else if (value === "NP") text = await import("./example/np")
+  else if (value === "C") text = await import("./example/c")
+  else text = await import("./example/example")
+
+  if (text.data) text = text.data
+
+  const { data, columns } = await processCSV(text, ",", ".", true)
+  dispatch(dataLoaded(data, columns, text))
 }

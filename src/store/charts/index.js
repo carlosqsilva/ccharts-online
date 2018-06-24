@@ -1,49 +1,16 @@
-// TABLES
-const A2 = [0, 0, 1.88, 1.023, 0.729, 0.577, 0.483, 0.419, 0.373, 0.337, 0.308]
-const A3 = [0, 0, 2.659, 1.954, 1.628, 1.427, 1.287, 1.182, 1.099, 1.032, 0.975, 0.927, 0.886, 0.85, 0.817, 0.789]
-const D3 = [0, 0, 0, 0, 0, 0, 0, 0.076, 0.136, 0.184, 0.223]
-const D4 = [0, 0, 3.267, 2.575, 2.282, 2.115, 2.004, 1.924, 1.864, 1.816, 1.777]
-const B3 = [0, 0, 0, 0, 0, 0, 0.03, 0.118, 0.185, 0.239, 0.284, 0.321, 0.354, 0.382, 0.406, 0.428]
-const B4 = [0, 0, 3.267, 2.568, 2.266, 2.089, 1.97, 1.882, 1.815, 1.761, 1.716, 1.679, 1.646, 1.618, 1.594, 1.572]
+import { table } from "./tables"
+import { limits, middle, points } from "./config"
+import {
+  avg,
+  pointsColor,
+  repeat,
+  standardDeviation,
+  splitArray
+} from "./utils"
 
-const limits = {
-  lineTension: 0,
-  pointRadius: 0,
-  borderColor: "#ee2b47",
-  borderWidth: 2,
-  fill: "+1"
-}
+const { A2, A3, B3, B4, D3, D4 } = table
 
-const middle = {
-  lineTension: 0,
-  pointRadius: 0,
-  fill: false
-}
-
-const points = {
-  lineTension: 0,
-  pointRadius: 3,
-  pointHoverRadius: 6,
-  borderWidth: 2,
-  borderColor: "#003459",
-  pointBorderWidth: 0,
-  pointBackgroundColor: "#259f6c",
-  fill: false
-}
-
-const repeat = (value, size) => Array(size).fill(value)
-
-const pointsColor = (ucl, lcl, values) => values.map((val, i) => (val > ucl || val < lcl ? "#f54d42" : "#259f6c"))
-
-const avg = (arr, ddof = 0) => arr.reduce((a, b) => a + b) / (arr.length - ddof)
-
-const variance = (arr, ddof = 0) => {
-  return avg(arr.map(x => Math.pow(x - avg(arr), 2)), ddof)
-}
-
-const standardDeviation = (arr, ddof = 0) => Math.sqrt(variance(arr, ddof))
-
-export const xbar_rbar = data => {
+const xbar_rbar = async data => {
   const sampleSize = data[0].length
   const size = data.length
 
@@ -81,7 +48,7 @@ export const xbar_rbar = data => {
   }
 }
 
-export const xbar_sbar = data => {
+const xbar_sbar = async data => {
   const sampleSize = data[0].length
   const size = data.length
 
@@ -119,7 +86,7 @@ export const xbar_sbar = data => {
   }
 }
 
-export const rbar = data => {
+const rbar = async data => {
   const sampleSize = data[0].length
   const size = data.length
 
@@ -150,7 +117,7 @@ export const rbar = data => {
   }
 }
 
-export const sbar = data => {
+const sbar = async data => {
   const sampleSize = data[0].length
   const size = data.length
 
@@ -180,7 +147,7 @@ export const sbar = data => {
   }
 }
 
-export const ewma = (data, weight = 0.2) => {
+const ewma = async (data, weight = 0.2) => {
   if (Array.isArray(data[0])) {
     data = data.map(row => avg(row))
   }
@@ -205,8 +172,18 @@ export const ewma = (data, weight = 0.2) => {
   let ucl = []
 
   for (let z = 1; z < size + 1; z++) {
-    lcl.push(center - 3 * std * Math.sqrt(weight / (2 - weight) * (1 - (1 - weight) ** (2 * z))))
-    ucl.push(center + 3 * std * Math.sqrt(weight / (2 - weight) * (1 - (1 - weight) ** (2 * z))))
+    lcl.push(
+      center -
+        3 *
+          std *
+          Math.sqrt((weight / (2 - weight)) * (1 - (1 - weight) ** (2 * z)))
+    )
+    ucl.push(
+      center +
+        3 *
+          std *
+          Math.sqrt((weight / (2 - weight)) * (1 - (1 - weight) ** (2 * z)))
+    )
   }
 
   return {
@@ -225,7 +202,7 @@ export const ewma = (data, weight = 0.2) => {
   }
 }
 
-export const cusum = data => {
+const cusum = async data => {
   if (Array.isArray(data[0])) {
     data = data.map(row => avg(row))
   }
@@ -280,4 +257,137 @@ export const cusum = data => {
       { ...limits, data: repeat(lcl, size) }
     ]
   }
+}
+
+const p_chart = async arr => {
+  if (arr[0].length !== 2) {
+    throw new Error("Dataset not suitable for P-Chart.")
+  }
+
+  const length = arr.length
+
+  const [sizes, data] = splitArray(arr)
+
+  const p = data.map((value, i) => value / sizes[i])
+  const pbar = avg(p)
+
+  if (!sizes.every(n => n * pbar >= 5 && n * (1 - pbar) >= 5)) {
+    throw new Error(
+      "Dataset doesn't meet this conditions; n * pbar >= 5; n * (1 - pbar) >=5."
+    )
+  }
+
+  let lcl, ucl, size
+
+  if ((size = avg(sizes)) === sizes[0]) {
+    let lower = pbar - 3 * Math.sqrt((pbar * (1 - pbar)) / size)
+    let upper = pbar + 3 * Math.sqrt((pbar * (1 - pbar)) / size)
+    if (lower < 0) lower = 0
+    if (upper > 1) upper = 1
+    lcl = repeat(lower, length)
+    ucl = repeat(upper, length)
+  } else {
+    lcl = new Array(length)
+    ucl = new Array(length)
+
+    sizes.forEach((size, i) => {
+      lcl[i] = pbar - 3 * Math.sqrt((pbar * (1 - pbar)) / size)
+      ucl[i] = pbar + 3 * Math.sqrt((pbar * (1 - pbar)) / size)
+    })
+  }
+
+  return {
+    title: "P-Chart",
+    ticks: {
+      ucl: Array.isArray(ucl) ? ucl[0] : ucl,
+      center: pbar,
+      lcl: Array.isArray(lcl) ? lcl[0] : lcl
+    },
+    datasets: [
+      { ...points, data: p },
+      { ...middle, data: repeat(pbar, length) },
+      { ...limits, steppedLine: true, data: ucl },
+      { ...limits, fills: "-1", steppedLine: true, data: lcl }
+    ]
+  }
+}
+
+const np_chart = async arr => {
+  if (arr[0].length !== 2) {
+    throw new Error("Dataset not suitable for NP-Chart.")
+  }
+
+  const length = arr.length
+
+  const [sizes, data] = splitArray(arr)
+
+  if (!(avg(sizes) === sizes[0])) {
+    throw new Error("The samples must have the same size for this chart")
+  }
+
+  const p = avg(data.map(val => val / sizes[0]))
+  const pbar = avg(data)
+
+  const lcl = pbar - 3 * Math.sqrt(pbar * (1 - p))
+  const ucl = pbar + 3 * Math.sqrt(pbar * (1 - p))
+
+  return {
+    title: "NP-Chart",
+    ticks: {
+      ucl: ucl,
+      center: pbar,
+      lcl: lcl
+    },
+    datasets: [
+      { ...points, data: data },
+      { ...middle, data: repeat(pbar, length) },
+      { ...limits, data: repeat(ucl, length) },
+      { ...limits, data: repeat(lcl, length) }
+    ]
+  }
+}
+
+const c_chart = async arr => {
+  if (arr[0].length !== 2) {
+    throw new Error("Dataset not suitable for C-Chart.")
+  }
+
+  const length = arr.length
+
+  const [sizes, data] = splitArray(arr)
+
+  if (!(avg(sizes) === sizes[0])) {
+    throw new Error("The samples must have the same size for this chart")
+  }
+
+  const cbar = avg(data)
+  const lcl = cbar - 3 * Math.sqrt(cbar)
+  const ucl = cbar + 3 * Math.sqrt(cbar)
+
+  return {
+    title: "C-Chart",
+    ticks: {
+      ucl: ucl,
+      center: cbar,
+      lcl: lcl
+    },
+    datasets: [
+      { ...points, data: data },
+      { ...middle, data: repeat(cbar, length) },
+      { ...limits, data: repeat(ucl, length) },
+      { ...limits, data: repeat(lcl, length) }
+    ]
+  }
+}
+
+export default {
+  Xbar_Rbar: xbar_rbar,
+  Xbar_Sbar: xbar_sbar,
+  Rbar: rbar,
+  Sbar: sbar,
+  Ewma: ewma,
+  Cusum: cusum,
+  P: p_chart,
+  NP: np_chart,
+  C: c_chart
 }

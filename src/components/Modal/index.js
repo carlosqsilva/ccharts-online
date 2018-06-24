@@ -8,7 +8,7 @@ import {
   set_Header,
   load_sample
 } from "../../store/actions"
-import { Select, CheckBox, FileInput, Button } from "../Inputs"
+import { Select, CheckBox, FileInput } from "../Inputs"
 import { DataTable } from "./table"
 
 const Modal = ({
@@ -26,7 +26,7 @@ const Modal = ({
   const decimal = ["Decimal", 'Option "."', 'Option ","']
 
   return (
-    <div class={`modal ${!closed && "is-active"}`}>
+    <div class={`modal ${!closed ? "is-active" : ""}`}>
       <div class="modal-background" />
       <div class="modal-card">
         <header class="modal-card-head">
@@ -53,9 +53,19 @@ const Modal = ({
               </div>
 
               <div class="level-item">
-                <Button handleClick={loadSample} class="is-dark">
-                  Import Example
-                </Button>
+                <Select
+                  handleChange={loadSample}
+                  type="is-dark"
+                  options={[
+                    "Examples...",
+                    "Xbar",
+                    "Cusum",
+                    "Ewma",
+                    "P",
+                    "NP",
+                    "C"
+                  ]}
+                />
               </div>
             </div>
           </div>
@@ -82,4 +92,7 @@ const actions = {
   loadSample: load_sample
 }
 
-export default connect(state, actions)(Modal)
+export default connect(
+  state,
+  actions
+)(Modal)

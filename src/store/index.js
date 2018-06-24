@@ -60,8 +60,9 @@ const plotState = {
     center: 10,
     lcl: 8
   },
-  displayChart: false,
-  displayAlarm: false
+  chart: false,
+  error: false,
+  errorMessage: ""
 }
 
 const plotReducer = (state = plotState, action) => {
@@ -73,13 +74,14 @@ const plotReducer = (state = plotState, action) => {
         datasets: action.datasets,
         title: action.title,
         ticks: action.ticks,
-        displayChart: true,
-        displayAlarm: false
+        chart: true,
+        error: false
       }
-    case type.DISPLAY_ALARM:
+    case type.SHOW_MESSAGE:
       return {
         ...state,
-        displayAlarm: action.display
+        error: true,
+        errorMessage: action.message
       }
     default:
       return state

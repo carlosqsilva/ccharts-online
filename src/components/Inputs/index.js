@@ -1,7 +1,7 @@
 import { h } from "preact"
 
-export const Button = ({ handleClick, children, ...props }) => (
-  <a onClick={handleClick} class={`button ${props.class}`}>
+export const Button = ({ action, children, type, ...props }) => (
+  <a onClick={action} class={`button ${type ? type : ""}`} {...props}>
     {children}
   </a>
 )
@@ -30,8 +30,8 @@ export const FileInput = ({ handleChange, children }) => (
   </div>
 )
 
-export const Select = ({ options, handleChange }) => (
-  <div class="select">
+export const Select = ({ options, type, handleChange }) => (
+  <div class={`select ${type ? type : ""} `}>
     <select onChange={handleChange}>
       {options.map((option, i) => <option key={i}>{option}</option>)}
     </select>
