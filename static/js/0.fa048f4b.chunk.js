@@ -1,0 +1,2 @@
+webpackJsonp([0],{179:function(n,e,t){"use strict";Object.defineProperty(e,"__esModule",{value:!0});const o="\nSample size(n), Count of Defective(np)\n1536,33\n1536,49\n1536,31\n1536,52\n1536,30\n1536,26\n1520,51\n1488,25\n1344,41\n944,18\n1152,22\n1152,13\n1683,13\n1700,25\n1700,62\n1870,15\n1140,30\n1152,26\n1140,4\n1128,23\n1152,10\n1128,6\n1152,21\n1152,21\n1152,7\n1152,22\n1152,23\n1140,16\n1140,15\n1128,18\n";e.data=o}});
+//# sourceMappingURL=0.fa048f4b.chunk.js.map

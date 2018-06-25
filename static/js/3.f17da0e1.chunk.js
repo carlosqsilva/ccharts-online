@@ -1,2 +1,0 @@
-webpackJsonp([3],{141:function(n,e,o){"use strict";Object.defineProperty(e,"__esModule",{value:!0});const s="\nPossible Unconformities,Unconformities\n100,21\n100,24\n100,16\n100,12\n100,15\n100,5\n100,28\n100,20\n100,31\n100,25\n100,20\n100,24\n100,16\n100,19\n100,10\n100,17\n100,13\n100,22\n100,18\n100,39\n100,30\n100,24\n100,16\n100,19\n100,17\n100,15\n";e.data=s}});
-//# sourceMappingURL=3.f17da0e1.chunk.js.map
