@@ -1,0 +1,1 @@
+{"version":3,"sources":["store/example/u.js"],"names":["data"],"mappings":"oGAAO,MAAMA,EAAQ","file":"static/js/1.c2c501ca.chunk.js","sourcesContent":["export const data = `\nUnidades Inspecionadas (n), Não-Conformidades (c)\n10,14\n8,12\n13,20\n10,11\n9.5,7\n10,10\n12,21\n10.5,16\n12,19\n12.5,23\n`\n\n\n\n// WEBPACK FOOTER //\n// ./src/store/example/u.js"],"sourceRoot":""}
