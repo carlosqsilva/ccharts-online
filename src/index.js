@@ -1,5 +1,5 @@
 import { h, render } from "preact"
-import { Provider } from "react-redux"
+import { Provider } from "preact-redux"
 import { createStore, applyMiddleware } from "redux"
 import thunk from "redux-thunk"
 

@@ -83,13 +83,13 @@ module.exports = {
     // `web` extension prefixes have been added for better support
     // for React Native Web.
     extensions: [".web.js", ".mjs", ".js", ".json", ".web.jsx", ".jsx"],
-    alias: {
-      react: "preact-compat",
-      "react-dom": "preact-compat",
-      // Support React Native Web
-      // https://www.smashingmagazine.com/2016/08/a-glimpse-into-the-future-with-react-native-for-web/
-      "react-native": "react-native-web"
-    },
+    // alias: {
+    //   react: "preact-compat",
+    //   "react-dom": "preact-compat",
+    //   // Support React Native Web
+    //   // https://www.smashingmagazine.com/2016/08/a-glimpse-into-the-future-with-react-native-for-web/
+    //   "react-native": "react-native-web"
+    // },
     plugins: [
       // Prevents users from importing files from outside of src/ (or node_modules/).
       // This often causes confusion because we only process files within src/ with babel.

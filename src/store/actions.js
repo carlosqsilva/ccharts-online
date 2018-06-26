@@ -151,6 +151,8 @@ export const load_sample = event => async dispatch => {
   if (value === "P") text = await import("./example/p")
   else if (value === "NP") text = await import("./example/np")
   else if (value === "C") text = await import("./example/c")
+  else if (value === "U") text = await import("./example/u")
+  else if (value === "MEWMA") text = await import("./example/mewma")
   else text = await import("./example/example")
 
   if (text.data) text = text.data

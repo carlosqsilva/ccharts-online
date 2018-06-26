@@ -1,5 +1,5 @@
 import { h } from "preact"
-import { connect } from "react-redux"
+import { connect } from "preact-redux"
 import {
   toggle_modal,
   loadData,
@@ -61,9 +61,11 @@ const Modal = ({
                     "Xbar",
                     "Cusum",
                     "Ewma",
+                    "MEWMA",
                     "P",
                     "NP",
-                    "C"
+                    "C",
+                    "U"
                   ]}
                 />
               </div>

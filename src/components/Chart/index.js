@@ -1,5 +1,5 @@
 import { h, Component } from "preact"
-import { connect } from "react-redux"
+import { connect } from "preact-redux"
 import Chart from "chart.js"
 import { toggle_modal, plot_Chart } from "../../store/actions"
 import { alarm } from "../../assets"
@@ -14,10 +14,12 @@ class ChartComponent extends Component {
     "Rbar",
     "Sbar",
     "Ewma",
+    "MEWMA",
     "Cusum",
     "P",
     "NP",
-    "C"
+    "C",
+    "U"
   ]
 
   componentDidMount() {

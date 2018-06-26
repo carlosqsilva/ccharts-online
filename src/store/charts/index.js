@@ -4,18 +4,21 @@ import {
   avg,
   pointsColor,
   repeat,
+  zeros,
   standardDeviation,
-  splitArray
+  splitArray,
+  sumArray,
+  divArray
 } from "./utils"
 
-const { A2, A3, B3, B4, D3, D4 } = table
+const { A2, A3, B3, B4, D3, D4, H4 } = table
 
 const xbar_rbar = async data => {
   const sampleSize = data[0].length
   const size = data.length
 
   let R = []
-  let values = [] // X
+  let values = []
 
   for (const row of data) {
     R.push(Math.max(...row) - Math.min(...row))
@@ -380,6 +383,96 @@ const c_chart = async arr => {
   }
 }
 
+const u_chart = async arr => {
+  const length = arr.length
+  const [sizes, data] = splitArray(arr)
+  const ubar = sumArray(data) / sumArray(sizes)
+  const values = divArray(data, sizes)
+
+  let ucl = new Array(length)
+  let lcl = new Array(length)
+
+  for (let i = 0; i < length; i++) {
+    lcl[i] = ubar - 3 * Math.sqrt(ubar / sizes[i])
+    ucl[i] = ubar + 3 * Math.sqrt(ubar / sizes[i])
+  }
+
+  return {
+    title: "U-Chart",
+    ticks: {
+      ucl: ucl[0],
+      center: ubar,
+      lcl: lcl[0]
+    },
+    datasets: [
+      { ...points, data: values },
+      { ...middle, data: repeat(ubar, length) },
+      { ...limits, steppedLine: true, data: ucl },
+      { ...limits, fills: "-1", steppedLine: true, data: lcl }
+    ]
+  }
+}
+
+const mewma = async (arr, lambd = 0.1) => {
+  const { math } = await import("./math")
+  const [nrow, ncol] = math.size(arr)
+  const mean = math.mean(arr, 0)
+
+  const mx = arr.map(values => math.subtract(values, mean))
+
+  let v = new Array(nrow - 1)
+  let s = new Array(ncol)
+  let z = zeros(nrow + 1, ncol)
+  let t2 = new Array(nrow)
+
+  for (let i = 0; i < nrow - 1; i++) {
+    v[i] = math.subtract(arr[i + 1], arr[i])
+  }
+
+  v = math.multiply(math.transpose(v), v)
+
+  for (let i = 0; i < ncol; i++) {
+    s[i] = math.multiply(1 / (2 * (nrow - 1)), v[i])
+  }
+
+  for (let i = 0; i < nrow; i++) {
+    z[i + 1] = math.add(
+      math.multiply(lambd, mx[i]),
+      math.multiply(1 - lambd, z[i])
+    )
+  }
+
+  z = z.slice(1)
+
+  let w, inv
+  for (let i = 0; i < nrow; i++) {
+    w = (lambd / (2 - lambd)) * (1 - (1 - lambd) ** (2 * (i + 1)))
+    inv = math.inv(math.multiply(w, s))
+    t2[i] = math.multiply(math.multiply(math.transpose(z[i]), inv), z[i])
+  }
+
+  const ucl = H4[lambd * 10 - 1][ncol - 1]
+
+  return {
+    title: "MEWMA",
+    ticks: {
+      ucl,
+      center: 0,
+      lcl: 0
+    },
+    datasets: [
+      {
+        ...points,
+        data: t2,
+        pointBackgroundColor: pointsColor(ucl, 0, t2)
+      },
+      { ...middle, data: repeat(0, nrow) },
+      { ...limits, data: repeat(ucl, nrow) },
+      { ...limits, data: repeat(0, nrow) }
+    ]
+  }
+}
+
 export default {
   Xbar_Rbar: xbar_rbar,
   Xbar_Sbar: xbar_sbar,
@@ -389,5 +482,7 @@ export default {
   Cusum: cusum,
   P: p_chart,
   NP: np_chart,
-  C: c_chart
+  C: c_chart,
+  U: u_chart,
+  MEWMA: mewma
 }
